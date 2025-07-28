@@ -7,7 +7,8 @@ public class UIManager : MonoBehaviour
     
     [Header("UI References")]
     public InventoryUI inventoryUI;
-    public GameStatusUI gameStatusUI;  // 새로 추가
+    public GameStatusUI gameStatusUI;
+    public PlayerStatusUI playerStatusUI;  // 새로 추가
     
     private bool isInventoryOpen = false;
 
@@ -24,15 +25,32 @@ public class UIManager : MonoBehaviour
         }
     }
     
+    void Start()
+    {
+        // Start에서 초기값 업데이트
+        if (gameStatusUI != null)
+        {
+            gameStatusUI.UpdateAllDisplays();
+        }
+        
+        if (playerStatusUI != null)
+        {
+            playerStatusUI.UpdateAllDisplays();
+        }
+    }
+    
     void OnEnable()
     {
-        // 기존 인벤토리 이벤트
+        // 기존 이벤트
         InventoryManager.OnInventoryChanged += OnInventoryUpdated;
-        
-        // 새로운 게임 상태 이벤트들 구독
         GoldManager.OnGoldChanged += OnGoldUpdated;
         TimeManager.OnTimeChanged += OnTimeUpdated;
         StaminaManager.OnStaminaChanged += OnStaminaUpdated;
+        
+        // 플레이어 데이터 이벤트 구독 (새로 추가)
+        PlayerDataManager.OnLevelChanged += OnLevelUpdated;
+        PlayerDataManager.OnExpChanged += OnExpUpdated;
+        PlayerDataManager.OnLevelUp += OnPlayerLevelUp;
     }
     
     void OnDisable()
@@ -42,6 +60,11 @@ public class UIManager : MonoBehaviour
         GoldManager.OnGoldChanged -= OnGoldUpdated;
         TimeManager.OnTimeChanged -= OnTimeUpdated;
         StaminaManager.OnStaminaChanged -= OnStaminaUpdated;
+        
+        // 플레이어 데이터 이벤트 구독 해제 (새로 추가)
+        PlayerDataManager.OnLevelChanged -= OnLevelUpdated;
+        PlayerDataManager.OnExpChanged -= OnExpUpdated;
+        PlayerDataManager.OnLevelUp -= OnPlayerLevelUp;
     }
     
     // ===== 인벤토리 관련 (기존) =====
@@ -72,9 +95,7 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    // ===== 게임 상태 UI 업데이트 (새로 추가) =====
-    
-    // 골드 업데이트
+    // ===== 게임 상태 UI 업데이트 (기존) =====
     private void OnGoldUpdated(int newGoldAmount)
     {
         if (gameStatusUI != null)
@@ -83,7 +104,6 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    // 시간 업데이트
     private void OnTimeUpdated(int hour, int minute, float totalMinutes)
     {
         if (gameStatusUI != null)
@@ -92,7 +112,6 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    // 스태미나 업데이트
     private void OnStaminaUpdated(int currentStamina, int maxStamina)
     {
         if (gameStatusUI != null)
@@ -101,9 +120,35 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    // ===== 추가 UI 기능 =====
+    // ===== 플레이어 상태 UI 업데이트 (새로 추가) =====
+    private void OnLevelUpdated(int newLevel)
+    {
+        if (playerStatusUI != null)
+        {
+            playerStatusUI.UpdateLevelDisplay(newLevel);
+        }
+    }
     
-    // 모든 UI 숨기기/보이기
+    private void OnExpUpdated(int currentExp, int requiredExp)
+    {
+        if (playerStatusUI != null)
+        {
+            playerStatusUI.UpdateExpDisplay(currentExp, requiredExp);
+        }
+    }
+    
+    private void OnPlayerLevelUp(int newLevel)
+    {
+        if (playerStatusUI != null)
+        {
+            playerStatusUI.ShowLevelUpEffect();
+        }
+        
+        // 레벨업 알림 (선택적)
+        ShowNotification($"레벨업! Lv.{newLevel} 달성!", 3f);
+    }
+    
+    // ===== 추가 UI 기능 =====
     public void ToggleAllUI(bool show)
     {
         if (inventoryUI != null)
@@ -111,21 +156,24 @@ public class UIManager : MonoBehaviour
             
         if (gameStatusUI != null)
             gameStatusUI.gameObject.SetActive(show);
+            
+        if (playerStatusUI != null)
+            playerStatusUI.gameObject.SetActive(show);
     }
     
-    // 알림 메시지 표시 (추후 구현 가능)
     public void ShowNotification(string message, float duration = 2f)
     {
         Debug.Log($"알림: {message}");
         // TODO: 실제 알림 UI 구현
     }
     
-    // 디버그용 - 현재 상태 확인
     public void LogCurrentStatus()
     {
         Debug.Log($"=== 현재 게임 상태 ===");
         Debug.Log($"골드: {GoldManager.instance.GetGold()}");
         Debug.Log($"시간: {TimeManager.instance.GetHour()}:{TimeManager.instance.GetMinute()}");
         Debug.Log($"스태미나: {StaminaManager.instance.GetStamina()}/{StaminaManager.instance.GetMaxStamina()}");
+        Debug.Log($"레벨: {PlayerDataManager.instance.GetLevel()}");
+        Debug.Log($"경험치: {PlayerDataManager.instance.GetCurrentExp()}/{PlayerDataManager.instance.GetRequiredExp()}");
     }
 }
