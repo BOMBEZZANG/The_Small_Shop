@@ -58,28 +58,16 @@ public class InventoryUI : MonoBehaviour
         }
 
         // 3. 요약된 아이템 목록을 바탕으로 실제 UI 슬롯을 생성하고 데이터 연결
-        foreach (var summaryEntry in itemSummary)
-        {
-            // 슬롯 프리팹을 contentTransform의 자식으로 복제
-            GameObject newSlot = Instantiate(slotPrefab, contentTransform);
-
-            // --- 이 부분이 핵심입니다 ---
-
-            // 슬롯의 자식 중에서 Image와 Text 컴포넌트를 찾는다.
-            // (참고: Image 컴포넌트는 두 개일 수 있으니(배경, 아이콘) 이름을 구분하거나 배열로 받아야 할 수도 있습니다.)
-            UnityEngine.UI.Image itemIcon = newSlot.GetComponentInChildren<UnityEngine.UI.Image>();
-            UnityEngine.UI.Text itemCountText = newSlot.GetComponentInChildren<UnityEngine.UI.Text>();
-
-            // 찾은 컴포넌트에 실제 데이터를 연결한다.
-            if (itemIcon != null)
-            {
-                itemIcon.sprite = summaryEntry.Key.materialIcon; // 아이콘 이미지 설정
-            }
-
-            if (itemCountText != null)
-            {
-                itemCountText.text = summaryEntry.Key.materialName + " x " + summaryEntry.Value; // 이름과 수량 텍스트 설정
-            }
-        }
+       foreach (var summaryEntry in itemSummary)
+{
+    GameObject newSlot = Instantiate(slotPrefab, contentTransform);
+    
+    // InventorySlot 컴포넌트 가져오기
+    InventorySlot slot = newSlot.GetComponent<InventorySlot>();
+    if (slot != null)
+    {
+        slot.SetItem(summaryEntry.Key, summaryEntry.Value);
+    }
+}
     }
 }
