@@ -2,11 +2,18 @@ using UnityEngine;
 
 public class TestItemAdder : MonoBehaviour
 {
-    // --- 모든 코드는 이 중괄호 안에 있어야 합니다 ---
-    public MaterialData itemToAdd;
-
+    // 배열로 여러 아이템을 담을 수 있게 수정
+    public MaterialData[] itemsToAdd;
+    
     void Start()
     {
-        InventoryManager.instance.AddItem(itemToAdd);
+        // 배열의 모든 아이템을 추가
+        foreach (MaterialData item in itemsToAdd)
+        {
+            if (item != null)
+            {
+                InventoryManager.instance.AddItem(item);
+            }
+        }
     }
 }

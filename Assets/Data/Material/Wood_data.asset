@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3be4c6ed5c9326d4e89e1c9ed07f968e, type: 3}
-  m_Name: Iron_data
+  m_Name: Wood_data
   m_EditorClassIdentifier: 
-  materialID: 1
-  materialName: Iron
-  materialIcon: {fileID: 5103231540499187363, guid: a948031cea5d8364a808d1b8c883861d, type: 3}
+  materialID: 2
+  materialName: Wood
+  materialIcon: {fileID: 7440981132975211316, guid: 4d9757ac4ff21da43a0791cc5ea72db1, type: 3}
   materialPrefab: {fileID: 0}
   materialDescription: 
