@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed72be77d8e76145be01a6445b064c1, type: 3}
+  m_Name: DefaultVillageSettings
+  m_EditorClassIdentifier: 
+  mapWidth: 50
+  mapHeight: 50
+  borderThickness: 2
+  squareSize: {x: 10, y: 10}
+  centerSquare: 1
+  buildings: []
+  pathDensity: 0.15
+  pathWidth: 1
+  treeDensity: 0.1
+  flowerDensity: 0.05
+  seed: 12345
+  useRandomSeed: 0

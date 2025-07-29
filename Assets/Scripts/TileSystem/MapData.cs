@@ -1,3 +1,7 @@
+using UnityEngine;
+using UnityEngine.Tilemaps;
+using System.Collections.Generic;
+
 // 개선된 심볼 매핑 시스템
 [System.Serializable]
 public class TileSymbolMapping

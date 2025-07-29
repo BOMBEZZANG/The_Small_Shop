@@ -1,0 +1,178 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf174ee60246d54aa1d97db953d51eb, type: 3}
+  m_Name: FirstVillageMap
+  m_EditorClassIdentifier: 
+  mapName: First Village
+  width: 50
+  height: 50
+  tileAssets:
+    grassTile: {fileID: 11400000, guid: 244fd069b6800be4d8dbdf09cd107f37, type: 2}
+    pathTile: {fileID: 11400000, guid: e2308882e8a909f4692ce1860eee88b1, type: 2}
+    stoneTile: {fileID: 11400000, guid: 5937c46a343c9b344b98ae3fbddfdd0a, type: 2}
+    plazaTile: {fileID: 11400000, guid: 05eb1824ac091cf4ab5f3a90fd317dd6, type: 2}
+    waterTile: {fileID: 11400000, guid: b1f94df407d194c41b6b20ad7e38396b, type: 2}
+    wallTile: {fileID: 11400000, guid: 0b48df70cf25e224586a114954c40972, type: 2}
+    playerHouseTile: {fileID: 11400000, guid: 037999ee2b05aaa47a9329017d0b7434, type: 2}
+    house1Tile: {fileID: 11400000, guid: 179a0519173610a47863d6e6b328224b, type: 2}
+    house2Tile: {fileID: 11400000, guid: 2bf4cbe07e3c3384b8a09991c4532d0b, type: 2}
+    shopTile: {fileID: 11400000, guid: 1ea50b693765f0c40b636e11766dc081, type: 2}
+    guildTile: {fileID: 11400000, guid: 0bdac22239d0dcf44a87d56ee69b7a7d, type: 2}
+    chiefHouseTile: {fileID: 11400000, guid: 891565ba1f03c9147baede21d6340bff, type: 2}
+    doorTile: {fileID: 11400000, guid: ea0d3f640699f454697d8d69f9384648, type: 2}
+    tree1Tile: {fileID: 11400000, guid: 0979a46bc0c4e5f41b87b98628b9bbed, type: 2}
+    tree2Tile: {fileID: 11400000, guid: ffa3c54fc27cb244093ce9356e73244f, type: 2}
+    flower1Tile: {fileID: 11400000, guid: 5eaba9cbaa98ed442afd63d7112beb12, type: 2}
+    flower2Tile: {fileID: 11400000, guid: d9e032f155ad56847a1a15f88d47ae1d, type: 2}
+    flower3Tile: {fileID: 11400000, guid: 396159ac57447cc478c04fe4431b9753, type: 2}
+    cropsTile: {fileID: 11400000, guid: 69e276ed60f14304a8ecc4853264a1d8, type: 2}
+    fountainTile: {fileID: 11400000, guid: 7958d8f3a04daf74c893aaae786bb038, type: 2}
+    fountainCenterTile: {fileID: 11400000, guid: 92dbd2743e0874e4d8aa55f698103e72, type: 2}
+    questBoardTile: {fileID: 11400000, guid: 3b7daf9197a5ec64db76086270e34d0a, type: 2}
+  symbolMappings:
+  - symbol: '#'
+    tileType: 5
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: T
+    tileType: 6
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: .
+    tileType: 1
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: =
+    tileType: 3
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: '-'
+    tileType: 2
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: H
+    tileType: 8
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: h
+    tileType: 9
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: S
+    tileType: 10
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: G
+    tileType: 11
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: C
+    tileType: 12
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: P
+    tileType: 7
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: D
+    tileType: 13
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: c
+    tileType: 19
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: f
+    tileType: 16
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: F
+    tileType: 17
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: Y
+    tileType: 18
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: ~
+    tileType: 4
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: '*'
+    tileType: 23
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: +
+    tileType: 3
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: '@'
+    tileType: 20
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: Q
+    tileType: 22
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: ' '
+    tileType: 0
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: 1
+    tileType: 24
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: 2
+    tileType: 25
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: 3
+    tileType: 26
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  - symbol: 4
+    tileType: 27
+    debugColor: {r: 1, g: 1, b: 1, a: 1}
+  mapLayoutText: '##################################################
+
+    ##TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT##
+
+    ##T..........................................T##
+
+    ##T.HHH......ccc........SSS...............T##
+
+    ##T.HHH......ccc........SSS...............T##
+
+    ##T.HHH......ccc........SSS...............T##
+
+    ##T...D........................D..........T##
+
+    ##T.......................................ff..T##
+
+    ##T............================.........ff..T##
+
+    ##T............=~~~~~~~~~~~~~~=...........T##
+
+    ##T.hhh.......=~+++++++++++~~=.GGG........T##
+
+    ##T.hhh.......=~+*******+~~=.GGG........T##
+
+    ##T.hhh.......=~+*@@@*+~~=.GGG........T##
+
+    ##T...D.......=~+*@Q@*+~~=...D...........T##
+
+    ##T............=~+*@@@*+~~=...............T##
+
+    ##T............=~+*****+~~=............F..T##
+
+    ##T............=~++++++++~~=...........FF.T##
+
+    ##T............=~~~~~~~~~~~~~~=..........F..T##
+
+    ##T............=======D========...........T##
+
+    ##T..........................................T##
+
+    ##T.........---------------------..........T##
+
+    ##T..........................................T##
+
+    ##T.CCC......................HHH..........T##
+
+    ##T.CCC...........YYY........HPH..........T##
+
+    ##T.CCC...........YYY........HHH..........T##
+
+    ##T...D...........YYY...........D..........T##
+
+    ##T..........................................T##
+
+    ##T..........................................T##
+
+    ##TTTTTTTTTTTTTTTTTTTTTDTTTTTTTTTTTTTTTTTTTTTT##
+
+    ##################################################'

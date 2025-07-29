@@ -2,67 +2,6 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 
-// 타일 자동 배치 규칙
-[CreateAssetMenu(fileName = "TileRule", menuName = "Tilemap/Tile Rule")]
-public class TileRule : ScriptableObject
-{
-    [System.Serializable]
-    public class NeighborRule
-    {
-        public Vector2Int offset;
-        public TileType requiredType = TileType.Empty;
-        public bool mustMatch = true; // true: 같아야 함, false: 달라야 함
-    }
-    
-    [System.Serializable]
-    public class TileVariant
-    {
-        public TileBase tile;
-        public List<NeighborRule> rules = new List<NeighborRule>();
-        public int priority = 0; // 높을수록 우선순위 높음
-    }
-    
-    [Header("Tile Configuration")]
-    public TileType tileType;
-    public TileBase defaultTile;
-    
-    [Header("Auto-Tiling Variants")]
-    public List<TileVariant> variants = new List<TileVariant>();
-    
-    // 주변 타일 체크하여 적절한 타일 반환
-    public TileBase GetTileVariant(Dictionary<Vector3Int, TileType> surroundingTiles, Vector3Int position)
-    {
-        // 우선순위 순으로 정렬
-        variants.Sort((a, b) => b.priority.CompareTo(a.priority));
-        
-        foreach (var variant in variants)
-        {
-            bool allRulesMatch = true;
-            
-            foreach (var rule in variant.rules)
-            {
-                Vector3Int checkPos = position + new Vector3Int(rule.offset.x, rule.offset.y, 0);
-                TileType neighborType = surroundingTiles.ContainsKey(checkPos) ? 
-                    surroundingTiles[checkPos] : TileType.Empty;
-                
-                bool matches = (neighborType == rule.requiredType) || 
-                              (rule.requiredType == TileType.Empty && neighborType == tileType);
-                
-                if (rule.mustMatch != matches)
-                {
-                    allRulesMatch = false;
-                    break;
-                }
-            }
-            
-            if (allRulesMatch)
-                return variant.tile;
-        }
-        
-        return defaultTile;
-    }
-}
-
 // 타일 자동 배치 시스템
 public class AutoTileSystem : MonoBehaviour
 {
@@ -117,22 +56,50 @@ public class AutoTileSystem : MonoBehaviour
     }
     
     // 9-슬라이스 타일용 헬퍼 메서드
-    public static List<NeighborRule> Get9SliceRules(bool topLeft = false, bool top = false, 
+    public static List<TileRule.NeighborRule> Get9SliceRules(bool topLeft = false, bool top = false, 
         bool topRight = false, bool left = false, bool right = false, 
         bool bottomLeft = false, bool bottom = false, bool bottomRight = false)
     {
-        var rules = new List<NeighborRule>();
+        var rules = new List<TileRule.NeighborRule>();
         
         // 8방향 체크
-        if (topLeft) rules.Add(new NeighborRule { offset = new Vector2Int(-1, 1), mustMatch = true });
-        if (top) rules.Add(new NeighborRule { offset = new Vector2Int(0, 1), mustMatch = true });
-        if (topRight) rules.Add(new NeighborRule { offset = new Vector2Int(1, 1), mustMatch = true });
-        if (left) rules.Add(new NeighborRule { offset = new Vector2Int(-1, 0), mustMatch = true });
-        if (right) rules.Add(new NeighborRule { offset = new Vector2Int(1, 0), mustMatch = true });
-        if (bottomLeft) rules.Add(new NeighborRule { offset = new Vector2Int(-1, -1), mustMatch = true });
-        if (bottom) rules.Add(new NeighborRule { offset = new Vector2Int(0, -1), mustMatch = true });
-        if (bottomRight) rules.Add(new NeighborRule { offset = new Vector2Int(1, -1), mustMatch = true });
+        if (topLeft) rules.Add(new TileRule.NeighborRule { offset = new Vector2Int(-1, 1), mustMatch = true });
+        if (top) rules.Add(new TileRule.NeighborRule { offset = new Vector2Int(0, 1), mustMatch = true });
+        if (topRight) rules.Add(new TileRule.NeighborRule { offset = new Vector2Int(1, 1), mustMatch = true });
+        if (left) rules.Add(new TileRule.NeighborRule { offset = new Vector2Int(-1, 0), mustMatch = true });
+        if (right) rules.Add(new TileRule.NeighborRule { offset = new Vector2Int(1, 0), mustMatch = true });
+        if (bottomLeft) rules.Add(new TileRule.NeighborRule { offset = new Vector2Int(-1, -1), mustMatch = true });
+        if (bottom) rules.Add(new TileRule.NeighborRule { offset = new Vector2Int(0, -1), mustMatch = true });
+        if (bottomRight) rules.Add(new TileRule.NeighborRule { offset = new Vector2Int(1, -1), mustMatch = true });
         
         return rules;
+    }
+    
+    // Rule 타일 쉽게 생성하기 위한 헬퍼 메서드들
+    public static TileRule.NeighborRule[] GetCornerRules(bool isOuterCorner)
+    {
+        if (isOuterCorner)
+        {
+            // 외부 모서리 (2면이 비어있음)
+            return new TileRule.NeighborRule[]
+            {
+                new TileRule.NeighborRule { offset = new Vector2Int(-1, 0), mustMatch = false },
+                new TileRule.NeighborRule { offset = new Vector2Int(0, -1), mustMatch = false },
+                new TileRule.NeighborRule { offset = new Vector2Int(1, 0), mustMatch = true },
+                new TileRule.NeighborRule { offset = new Vector2Int(0, 1), mustMatch = true }
+            };
+        }
+        else
+        {
+            // 내부 모서리 (3면이 채워짐)
+            return new TileRule.NeighborRule[]
+            {
+                new TileRule.NeighborRule { offset = new Vector2Int(-1, 0), mustMatch = true },
+                new TileRule.NeighborRule { offset = new Vector2Int(0, -1), mustMatch = true },
+                new TileRule.NeighborRule { offset = new Vector2Int(1, 0), mustMatch = true },
+                new TileRule.NeighborRule { offset = new Vector2Int(0, 1), mustMatch = true },
+                new TileRule.NeighborRule { offset = new Vector2Int(-1, -1), mustMatch = false }
+            };
+        }
     }
 }

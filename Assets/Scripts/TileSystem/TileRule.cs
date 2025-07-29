@@ -17,6 +17,7 @@ public class TileRule : ScriptableObject
     [System.Serializable]
     public class TileVariant
     {
+        public string variantName;  // 디버그용 이름
         public TileBase tile;
         public List<NeighborRule> rules = new List<NeighborRule>();
         public int priority = 0; // 높을수록 우선순위 높음
@@ -61,78 +62,55 @@ public class TileRule : ScriptableObject
         
         return defaultTile;
     }
-}
-
-// 타일 자동 배치 시스템
-public class AutoTileSystem : MonoBehaviour
-{
-    [Header("Tile Rules")]
-    public List<TileRule> tileRules = new List<TileRule>();
-    private Dictionary<TileType, TileRule> ruleDict = new Dictionary<TileType, TileRule>();
     
-    [Header("References")]
-    public MapBuilder mapBuilder;
-    
-    void Awake()
+    // 에디터용 헬퍼 메서드 - 기본 9-슬라이스 타일 설정
+    [ContextMenu("Setup 9-Slice Tiles")]
+    private void Setup9SliceTiles()
     {
-        // 룰 딕셔너리 생성
-        foreach (var rule in tileRules)
-        {
-            if (rule != null)
-                ruleDict[rule.tileType] = rule;
-        }
-    }
-    
-    // 자동 타일링 적용
-    public void ApplyAutoTiling(Dictionary<Vector3Int, TileType> mapLayout)
-    {
-        Dictionary<Vector3Int, TileBase> tilesToPlace = new Dictionary<Vector3Int, TileBase>();
+        variants.Clear();
         
-        foreach (var kvp in mapLayout)
+        // 중앙 (모든 면이 같은 타일)
+        variants.Add(new TileVariant
         {
-            Vector3Int position = kvp.Key;
-            TileType tileType = kvp.Value;
-            
-            if (ruleDict.ContainsKey(tileType))
+            variantName = "Center",
+            priority = 1,
+            rules = new List<NeighborRule>
             {
-                TileBase selectedTile = ruleDict[tileType].GetTileVariant(mapLayout, position);
-                if (selectedTile != null)
-                    tilesToPlace[position] = selectedTile;
+                new NeighborRule { offset = new Vector2Int(0, 1), mustMatch = true },
+                new NeighborRule { offset = new Vector2Int(0, -1), mustMatch = true },
+                new NeighborRule { offset = new Vector2Int(1, 0), mustMatch = true },
+                new NeighborRule { offset = new Vector2Int(-1, 0), mustMatch = true }
             }
-            else
-            {
-                // 기본 타일 사용
-                TileBase defaultTile = mapBuilder.mapData.tileAssets.GetTile(tileType);
-                if (defaultTile != null)
-                    tilesToPlace[position] = defaultTile;
-            }
-        }
+        });
         
-        // 타일 배치
-        foreach (var kvp in tilesToPlace)
+        // 모서리들
+        variants.Add(new TileVariant
         {
-            Tilemap targetTilemap = mapBuilder.GetTilemapForTileType(mapLayout[kvp.Key]);
-            targetTilemap.SetTile(kvp.Key, kvp.Value);
-        }
-    }
-    
-    // 9-슬라이스 타일용 헬퍼 메서드
-    public static List<NeighborRule> Get9SliceRules(bool topLeft = false, bool top = false, 
-        bool topRight = false, bool left = false, bool right = false, 
-        bool bottomLeft = false, bool bottom = false, bool bottomRight = false)
-    {
-        var rules = new List<NeighborRule>();
+            variantName = "Top Left Corner",
+            priority = 2,
+            rules = new List<NeighborRule>
+            {
+                new NeighborRule { offset = new Vector2Int(0, 1), mustMatch = false },
+                new NeighborRule { offset = new Vector2Int(-1, 0), mustMatch = false },
+                new NeighborRule { offset = new Vector2Int(1, 0), mustMatch = true },
+                new NeighborRule { offset = new Vector2Int(0, -1), mustMatch = true }
+            }
+        });
         
-        // 8방향 체크
-        if (topLeft) rules.Add(new NeighborRule { offset = new Vector2Int(-1, 1), mustMatch = true });
-        if (top) rules.Add(new NeighborRule { offset = new Vector2Int(0, 1), mustMatch = true });
-        if (topRight) rules.Add(new NeighborRule { offset = new Vector2Int(1, 1), mustMatch = true });
-        if (left) rules.Add(new NeighborRule { offset = new Vector2Int(-1, 0), mustMatch = true });
-        if (right) rules.Add(new NeighborRule { offset = new Vector2Int(1, 0), mustMatch = true });
-        if (bottomLeft) rules.Add(new NeighborRule { offset = new Vector2Int(-1, -1), mustMatch = true });
-        if (bottom) rules.Add(new NeighborRule { offset = new Vector2Int(0, -1), mustMatch = true });
-        if (bottomRight) rules.Add(new NeighborRule { offset = new Vector2Int(1, -1), mustMatch = true });
+        // 가장자리들
+        variants.Add(new TileVariant
+        {
+            variantName = "Top Edge",
+            priority = 2,
+            rules = new List<NeighborRule>
+            {
+                new NeighborRule { offset = new Vector2Int(0, 1), mustMatch = false },
+                new NeighborRule { offset = new Vector2Int(0, -1), mustMatch = true },
+                new NeighborRule { offset = new Vector2Int(1, 0), mustMatch = true },
+                new NeighborRule { offset = new Vector2Int(-1, 0), mustMatch = true }
+            }
+        });
         
-        return rules;
+        Debug.Log($"{name}: 9-슬라이스 타일 설정 완료!");
     }
 }
