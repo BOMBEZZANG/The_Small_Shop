@@ -15,20 +15,20 @@ public class InteractableObject : MonoBehaviour
 {
     [Header("Interaction Settings")]
     [SerializeField] private InteractionType interactionType;
-    [SerializeField] private string interactionName = "상호작용";
-    [SerializeField] private float interactionTime = 0f; // 0 = 즉시, >0 = 시간 필요
-    [SerializeField] private bool isReusable = true; // 재사용 가능 여부
-    [SerializeField] private float cooldownTime = 0f; // 재사용 대기시간
+    [SerializeField] protected string interactionName = "상호작용";  // protected로 변경
+    [SerializeField] protected float interactionTime = 0f;           // protected로 변경
+    [SerializeField] protected bool isReusable = true;               // protected로 변경
+    [SerializeField] private float cooldownTime = 0f;
     
     [Header("Requirements")]
     [SerializeField] private int requiredLevel = 0;
-    [SerializeField] private MaterialData requiredTool; // 필요한 도구
+    [SerializeField] private MaterialData requiredTool;
     [SerializeField] private int staminaCost = 0;
     
     [Header("Visual Settings")]
     [SerializeField] private Color highlightColor = Color.yellow;
     [SerializeField] private bool showFloatingIcon = true;
-    [SerializeField] private Sprite interactionIcon; // [E] 대신 표시할 아이콘
+    [SerializeField] private Sprite interactionIcon;
     
     [Header("Events")]
     public UnityEvent<PlayerController> OnInteractionStart;
@@ -38,7 +38,7 @@ public class InteractableObject : MonoBehaviour
     [Header("UI Data")]
     [SerializeField] private InteractionData interactionData;
 
-    // Getter 메서드 추가
+    // Getter 메서드
     public InteractionData GetInteractionData() => interactionData;
     
     // 상태
@@ -51,7 +51,8 @@ public class InteractableObject : MonoBehaviour
     // 컴포넌트
     private InteractionVisualizer visualizer;
     
-    void Awake()
+    // protected virtual로 변경하여 상속 가능하게
+    protected virtual void Awake()
     {
         // Collider가 Trigger인지 확인
         Collider2D col = GetComponent<Collider2D>();
@@ -66,36 +67,36 @@ public class InteractableObject : MonoBehaviour
     }
 
     [System.Obsolete]
-void Update()
-{
-    // 쿨다운 처리
-    if (isOnCooldown)
+    void Update()
     {
-        cooldownTimer -= Time.deltaTime;
-        if (cooldownTimer <= 0)
+        // 쿨다운 처리
+        if (isOnCooldown)
         {
-            isOnCooldown = false;
+            cooldownTimer -= Time.deltaTime;
+            if (cooldownTimer <= 0)
+            {
+                isOnCooldown = false;
+            }
+        }
+        
+        // 상호작용 진행 처리
+        if (isInteracting && interactionTime > 0)
+        {
+            interactionTimer += Time.deltaTime;
+            float progress = interactionTimer / interactionTime;
+            
+            // 진행률 이벤트
+            OnInteractionProgress?.Invoke(progress);
+            
+            if (interactionTimer >= interactionTime)
+            {
+                CompleteInteraction();
+            }
         }
     }
     
-    // 상호작용 진행 처리
-    if (isInteracting && interactionTime > 0)
-    {
-        interactionTimer += Time.deltaTime;
-        float progress = interactionTimer / interactionTime;
-        
-        // 진행률 이벤트 (null 체크 추가)
-        OnInteractionProgress?.Invoke(progress);  // ← ? 추가!
-        
-        if (interactionTimer >= interactionTime)
-        {
-            CompleteInteraction();
-        }
-    }
-}
-    
-    // ===== 상호작용 가능 여부 체크 =====
-    public bool CanInteract(PlayerController player)
+    // ===== 상호작용 가능 여부 체크 (virtual로 변경) =====
+    public virtual bool CanInteract(PlayerController player)
     {
         if (isOnCooldown || isInteracting) return false;
         
@@ -127,9 +128,9 @@ void Update()
         return true;
     }
 
-    // ===== 상호작용 시작 =====
+    // ===== 상호작용 시작 (virtual로 변경) =====
     [System.Obsolete]
-    public void StartInteraction(PlayerController player)
+    public virtual void StartInteraction(PlayerController player)
     {
         if (!CanInteract(player)) 
         {
@@ -162,29 +163,29 @@ void Update()
 
     // ===== 상호작용 완료 =====
     [System.Obsolete]
-   private void CompleteInteraction()
-{
-    isInteracting = false;
-    
-    var player = FindObjectOfType<PlayerController>();
-    if (player != null)
+    private void CompleteInteraction()
     {
-        player.SetMovementEnabled(true);
-        OnInteractionComplete?.Invoke(player);  // ← ? 추가
+        isInteracting = false;
+        
+        var player = FindObjectOfType<PlayerController>();
+        if (player != null)
+        {
+            player.SetMovementEnabled(true);
+            OnInteractionComplete?.Invoke(player);
+        }
+        
+        // 재사용 불가능한 경우 비활성화
+        if (!isReusable)
+        {
+            gameObject.SetActive(false);
+        }
+        else if (cooldownTime > 0)
+        {
+            // 쿨다운 시작
+            isOnCooldown = true;
+            cooldownTimer = cooldownTime;
+        }
     }
-    
-    // 재사용 불가능한 경우 비활성화
-    if (!isReusable)
-    {
-        gameObject.SetActive(false);
-    }
-    else if (cooldownTime > 0)
-    {
-        // 쿨다운 시작
-        isOnCooldown = true;
-        cooldownTimer = cooldownTime;
-    }
-}
 
     // ===== 상호작용 취소 =====
     [System.Obsolete]

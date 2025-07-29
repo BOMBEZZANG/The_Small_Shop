@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: QuestGiver_VisitorData
+  m_EditorClassIdentifier: Assembly-CSharp::VisitorNPCData
+  npcID: 100
+  npcName: Cat_PaPa
+  npcType: 0
+  npcPrefab: {fileID: 3875046982898881877, guid: 24fb4b32b9c36fc40bdb6d3f94e39154, type: 3}
+  npcPortrait: {fileID: 0}
+  animator: {fileID: 0}
+  availableDialogues: []
+  defaultDialogue: {fileID: 11400000, guid: 58506a23d1ca7de4ea75647f104522ee, type: 2}
+  interactionRange: 2
+  indicatorOffset: {x: 0, y: 2, z: 0}
+  greetingSound: {fileID: 0}
+  footstepSounds: []
+  requiredPlayerLevel: 1
+  requiredQuestComplete: 
+  visitOnce: 1
+  visitDelay: 2
+  moveToPlayerSpeed: 4
+  disappearAfterDialogue: 0
+  questToGive: 
+  questDialogue: {fileID: 11400000, guid: c90d68bb0f63818408e6f2c91e12e062, type: 2}

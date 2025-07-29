@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
     public InventoryUI inventoryUI;
     public GameStatusUI gameStatusUI;
     public PlayerStatusUI playerStatusUI;  // 새로 추가
-    
+    public DialogueUI dialogueUI; 
     private bool isInventoryOpen = false;
 
     void Awake()

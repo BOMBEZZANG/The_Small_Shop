@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f11a5f61312f564f9a2b6134cd749a3, type: 3}
+  m_Name: QuestGiver_FirstMeeting
+  m_EditorClassIdentifier: 
+  dialogueID: 1001
+  dialogueName: FirstMeet_Cat_Quest
+  dialogueLines:
+  - text: Hello. Can you do favor for me?
+    speakerName: Cat_PaPa
+    speakerPortrait: {fileID: 0}
+    voiceClip: {fileID: 0}
+    displayTime: 0
+    isPlayerLine: 0
+  - text: I am from far way
+    speakerName: Cat_PaPa
+    speakerPortrait: {fileID: 0}
+    voiceClip: {fileID: 0}
+    displayTime: 0
+    isPlayerLine: 0
+  - text: Plz make Cat_translator. Can you do that?
+    speakerName: Cat_PaPa
+    speakerPortrait: {fileID: 0}
+    voiceClip: {fileID: 0}
+    displayTime: 0
+    isPlayerLine: 0
+  hasChoices: 1
+  choices:
+  - choiceText: Okay. I will do it.
+    nextDialogueID: 0
+    conditions: []
+    effects: []
+  - choiceText: Sorry. I am busy.
+    nextDialogueID: 0
+    conditions: []
+    effects: []
+  startConditions: []
+  isRepeatable: 1
+  priority: 0
