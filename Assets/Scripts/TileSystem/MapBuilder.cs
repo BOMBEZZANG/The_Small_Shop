@@ -280,30 +280,46 @@ public class MapBuilder : MonoBehaviour
         }
     }
     
-    bool ValidateMap()
+// MapBuilder.cs의 ValidateMap 메서드를 다음과 같이 수정합니다:
+
+bool ValidateMap()
+{
+    validationErrors.Clear();
+    
+    // 플레이어 집 확인
+    if (!mapLayout.Any(kvp => kvp.Value == TileType.PlayerHouse))
     {
-        validationErrors.Clear();
-        
-        if (!mapLayout.Any(kvp => kvp.Value == TileType.PlayerHouse))
-        {
-            validationErrors.Add("No player house found!");
-        }
-        
-        bool hasExit = mapLayout.Any(kvp => kvp.Value == TileType.Door && 
-                                           (kvp.Key.y == 0 || kvp.Key.y == mapData.height - 1 ||
-                                            kvp.Key.x == 0 || kvp.Key.x == mapData.width - 1));
-        if (!hasExit)
-        {
-            validationErrors.Add("No exit door found on map borders!");
-        }
-        
-        foreach (var error in validationErrors)
-        {
-            Debug.LogError($"Map Validation: {error}");
-        }
-        
-        return validationErrors.Count == 0;
+        validationErrors.Add("No player house found!");
     }
+    
+    // 출구 확인 - 경계 근처(1칸 이내)도 허용
+    bool hasExit = mapLayout.Any(kvp => kvp.Value == TileType.Door && 
+                                      (kvp.Key.y <= 1 || kvp.Key.y >= mapData.height - 2 ||
+                                       kvp.Key.x <= 1 || kvp.Key.x >= mapData.width - 2));
+    if (!hasExit)
+    {
+        validationErrors.Add("No exit door found near map borders!");
+    }
+    
+    // 추가 검증: 최소한 하나의 문이 있는지
+    if (!mapLayout.Any(kvp => kvp.Value == TileType.Door))
+    {
+        validationErrors.Add("No doors found in the map!");
+    }
+    
+    // 추가 검증: 상점이 있는지 (선택적)
+    if (!mapLayout.Any(kvp => kvp.Value == TileType.Shop))
+    {
+        Debug.LogWarning("No shop found in the map (optional)");
+    }
+    
+    foreach (var error in validationErrors)
+    {
+        Debug.LogError($"Map Validation: {error}");
+    }
+    
+    return validationErrors.Count == 0;
+}
     
     void OnDrawGizmos()
     {

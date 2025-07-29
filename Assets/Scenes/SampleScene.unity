@@ -727,7 +727,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &150567367
 Transform:
   m_ObjectHideFlags: 0
@@ -28488,7 +28488,7 @@ MonoBehaviour:
   buildingTilemap: {fileID: 147464900}
   decorationTilemap: {fileID: 491827411}
   collisionTilemap: {fileID: 194450659}
-  mapData: {fileID: 0}
+  mapData: {fileID: 11400000, guid: 31adfc6ca2211a4478eb4505dd0b306a, type: 2}
   autoTileSystem: {fileID: 1229239961}
   useAutoTiling: 1
   npcMerchantPrefab: {fileID: 0}
@@ -28497,6 +28497,8 @@ MonoBehaviour:
   npcChildPrefab: {fileID: 0}
   validateOnBuild: 1
   showDebugGizmos: 1
+  buildButton: 1
+  clearButton: 0
 --- !u!4 &1229239963
 Transform:
   m_ObjectHideFlags: 0
