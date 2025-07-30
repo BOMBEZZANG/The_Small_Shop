@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: QuestGiver_VisitorData
+  m_Name: New Visitor NPC
   m_EditorClassIdentifier: Assembly-CSharp::VisitorNPCData
-  npcID: 100
-  npcName: Cat_PaPa
+  npcID: 0
+  npcName: 
   npcType: 0
-  npcPrefab: {fileID: 3875046982898881877, guid: 24fb4b32b9c36fc40bdb6d3f94e39154, type: 3}
+  npcPrefab: {fileID: 0}
   npcPortrait: {fileID: 0}
   animator: {fileID: 0}
   availableDialogues: []
-  defaultDialogue: {fileID: 11400000, guid: 58506a23d1ca7de4ea75647f104522ee, type: 2}
+  defaultDialogue: {fileID: 0}
   interactionRange: 2
   indicatorOffset: {x: 0, y: 2, z: 0}
   greetingSound: {fileID: 0}
@@ -27,8 +27,16 @@ MonoBehaviour:
   requiredPlayerLevel: 1
   requiredQuestComplete: 
   visitOnce: 1
-  visitDelay: 2
+  visitDelay: 0
   moveToPlayerSpeed: 4
-  disappearAfterDialogue: 0
+  disappearAfterDialogue: 1
+  useMovementPath: 0
+  movementPath: []
+  pathMoveSpeed: 3
+  waitTimeAtPoint: 1
+  loopPath: 0
+  moveToPlayerAfterPath: 1
+  pathColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  showPathInEditor: 1
   questToGive: 
-  questDialogue: {fileID: 11400000, guid: c90d68bb0f63818408e6f2c91e12e062, type: 2}
+  questDialogue: {fileID: 0}

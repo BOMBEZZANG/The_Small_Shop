@@ -112,18 +112,30 @@ public class ResidentNPCData : NPCData
 public class VisitorNPCData : NPCData
 {
     [Header("Visit Conditions")]
-    public int requiredPlayerLevel = 1;       // 필요 플레이어 레벨
-    public string requiredQuestComplete = ""; // 필요 완료 퀘스트
-    public bool visitOnce = true;             // 한 번만 방문
+    public int requiredPlayerLevel = 1;       
+    public string requiredQuestComplete = ""; 
+    public bool visitOnce = true;             
     
     [Header("Visit Behavior")]
-    public float visitDelay = 0f;             // 조건 충족 후 대기 시간
-    public float moveToPlayerSpeed = 4f;      // 플레이어에게 이동 속도
-    public bool disappearAfterDialogue = true;// 대화 후 사라짐
+    public float visitDelay = 0f;             
+    public float moveToPlayerSpeed = 4f;      
+    public bool disappearAfterDialogue = true;
+    
+    [Header("Movement Path")]
+    public bool useMovementPath = false;           // 경로 이동 사용 여부
+    public List<Vector2> movementPath = new List<Vector2>(); // 이동 경로 지점들
+    public float pathMoveSpeed = 3f;               // 경로 이동 속도
+    public float waitTimeAtPoint = 1f;             // 각 지점에서 대기 시간
+    public bool loopPath = false;                  // 경로 반복 여부
+    public bool moveToPlayerAfterPath = true;      // 경로 완료 후 플레이어에게 이동
+    
+    [Header("Path Visualization")]
+    public Color pathColor = Color.yellow;         // 에디터에서 경로 표시 색상
+    public bool showPathInEditor = true;           // 에디터에서 경로 표시 여부
     
     [Header("Quest")]
-    public string questToGive;                // 부여할 퀘스트 ID
-    public DialogueData questDialogue;        // 퀘스트 대화
+    public string questToGive;                
+    public DialogueData questDialogue;        
     
     public override void InitializeNPCData()
     {
@@ -133,21 +145,20 @@ public class VisitorNPCData : NPCData
     // 방문 조건 체크
     public bool CheckVisitConditions()
     {
-        // 레벨 체크
         if (PlayerDataManager.instance.GetLevel() < requiredPlayerLevel)
             return false;
             
         // TODO: 퀘스트 완료 체크
-        // if (!string.IsNullOrEmpty(requiredQuestComplete))
-        // {
-        //     if (!QuestManager.instance.IsQuestCompleted(requiredQuestComplete))
-        //         return false;
-        // }
         
         return true;
     }
+    
+    // 경로가 유효한지 확인
+    public bool IsPathValid()
+    {
+        return useMovementPath && movementPath != null && movementPath.Count > 0;
+    }
 }
-
 // NPC 일정 (시간대별 행동)
 [System.Serializable]
 public class NPCSchedule
