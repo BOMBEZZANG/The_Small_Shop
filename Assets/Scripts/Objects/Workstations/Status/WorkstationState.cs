@@ -14,7 +14,7 @@ public class WorkstationState
     public int processingAmount;
     public float processingStartTime;
     public float processingDuration;
-    public DecomposerRecipe currentRecipe;
+    public WorkstationRecipe currentRecipe;
     
     // 처리 완료된 아이템들
     public List<ProcessedItem> completedItems = new List<ProcessedItem>();

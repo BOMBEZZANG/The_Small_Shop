@@ -28683,7 +28683,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3875046982898881877, guid: 24fb4b32b9c36fc40bdb6d3f94e39154, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3926189294324722114, guid: 24fb4b32b9c36fc40bdb6d3f94e39154, type: 3}
       propertyPath: debugForceSpawn
@@ -34800,6 +34800,54 @@ Transform:
   m_Children: []
   m_Father: {fileID: 27350839}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &779238962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 779238963}
+  - component: {fileID: 779238964}
+  m_Layer: 3
+  m_Name: SpawnPoint_Village
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &779238963
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779238962}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.08, y: 12.51, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1483128551}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &779238964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779238962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f63f49b780ad44482abf46a7243cf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDefaultSpawn: 1
+  spawnPointID: SpawnPoint_Village
+  gizmoColor: {r: 0, g: 1, b: 0, a: 1}
+  gizmoSize: 1
 --- !u!1 &789661416
 GameObject:
   m_ObjectHideFlags: 0
@@ -35027,8 +35075,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemsToAdd:
-  - {fileID: 11400000, guid: b4c37f4c215dab541b43efe1c77359fc, type: 2}
-  - {fileID: 11400000, guid: 88caa89c24d791b408f9d2c6b3bf68c4, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &792240357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36631,7 +36679,8 @@ Transform:
   m_LocalPosition: {x: -2.46, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 779238963}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1483128552
@@ -56321,13 +56370,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3221965292594129812, guid: 970048828573b964dbd421b24f937566, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011945545668111364, guid: 970048828573b964dbd421b24f937566, type: 3}
+      propertyPath: decomposerData
+      value: 
+      objectReference: {fileID: 11400000, guid: 7a12273f39e80f944ac17b8e60ff63fa, type: 2}
+    - target: {fileID: 5011945545668111364, guid: 970048828573b964dbd421b24f937566, type: 3}
+      propertyPath: workstationData
+      value: 
+      objectReference: {fileID: 11400000, guid: 7a12273f39e80f944ac17b8e60ff63fa, type: 2}
+    - target: {fileID: 5011945545668111364, guid: 970048828573b964dbd421b24f937566, type: 3}
+      propertyPath: isFirstDecomposer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011945545668111364, guid: 970048828573b964dbd421b24f937566, type: 3}
+      propertyPath: tutorialCompleteMessage
+      value: It's working Start to Decompose
+      objectReference: {fileID: 0}
     - target: {fileID: 5506104064563612364, guid: 970048828573b964dbd421b24f937566, type: 3}
       propertyPath: m_SortingOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6130206590713634496, guid: 970048828573b964dbd421b24f937566, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6800913867861439554, guid: 970048828573b964dbd421b24f937566, type: 3}
       propertyPath: m_Name
       value: Decomposer_Tutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800913867861439554, guid: 970048828573b964dbd421b24f937566, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8748037674015194061, guid: 970048828573b964dbd421b24f937566, type: 3}
       propertyPath: m_LocalPosition.x

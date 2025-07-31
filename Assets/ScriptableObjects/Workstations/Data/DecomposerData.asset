@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04d962a6f7534c641ad8ea88efcbe873, type: 3}
   m_Name: DecomposerData
   m_EditorClassIdentifier: 
-  workstationName: DecomposerData
-  description: Decompose Materials
+  workstationName: Basic_DecompoerSer
+  description: 
   icon: {fileID: 0}
   workstationType: 0
   defaultProcessTime: 5
@@ -27,15 +27,16 @@ MonoBehaviour:
   idlePrompt: Interaction
   processingPrompt: Working
   completePrompt: Completed
-  brokenPrompt: Need to Repair
-  recipes: []
+  brokenPrompt: Need Repair
+  recipes:
+  - {fileID: 11400000, guid: a01d138e3a5e0cf45920f37620001b5a, type: 2}
   speedMultiplier: 1
   bonusOutputChance: 0
   speedPenaltyAt50Percent: 0.8
   speedPenaltyAt20Percent: 0.5
   qualityPenaltyAt20Percent: 0.7
-  primaryRepairItem: {fileID: 11400000, guid: d7fb565bfabaac94a83be66222de9fce, type: 2}
-  primaryRepairAmount: 2
-  secondaryRepairItem: {fileID: 11400000, guid: 2659c43771c9a5b479612e4ab2a686c9, type: 2}
-  secondaryRepairAmount: 1
+  primaryRepairItem: {fileID: 11400000, guid: 2659c43771c9a5b479612e4ab2a686c9, type: 2}
+  primaryRepairAmount: 1
+  secondaryRepairItem: {fileID: 11400000, guid: d7fb565bfabaac94a83be66222de9fce, type: 2}
+  secondaryRepairAmount: 2
   durabilityRestoreAmount: 50

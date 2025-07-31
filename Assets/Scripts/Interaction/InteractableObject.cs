@@ -162,7 +162,6 @@ protected virtual void Awake()
     }
 
     // ===== 상호작용 완료 =====
-    [System.Obsolete]
     private void CompleteInteraction()
     {
         isInteracting = false;
@@ -177,6 +176,7 @@ protected virtual void Awake()
         // 재사용 불가능한 경우 비활성화
         if (!isReusable)
         {
+            Debug.Log($"비활성화: {gameObject.name} (isReusable = {isReusable})");
             gameObject.SetActive(false);
         }
         else if (cooldownTime > 0)

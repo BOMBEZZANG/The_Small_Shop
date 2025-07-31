@@ -50,16 +50,17 @@ public class DecomposerController : BaseWorkstationController
         if (availableRecipe != null)
         {
             // 재료 소비
-            InventoryManager.instance.RemoveItem(availableRecipe.inputItem, availableRecipe.inputAmount);
+            availableRecipe.ConsumeInputItems();
             
             // 처리 시간 계산 (내구도에 따른 속도 패널티 적용)
-            float processingTime = CalculateProcessingTime(availableRecipe.processingTime);
+            float processingTime = CalculateProcessingTime(availableRecipe.baseProcessingTime);
             
             // 현재 레시피 저장
             state.currentRecipe = availableRecipe;
             
-            // 처리 시작
-            StartProcessing(availableRecipe.inputItem, availableRecipe.inputAmount, processingTime);
+            // 처리 시작 (첫 번째 입력 아이템을 대표로 사용)
+            var firstInput = availableRecipe.inputItems[0];
+            StartProcessing(firstInput.item, firstInput.amount, processingTime);
             
             return true;
         }
@@ -72,11 +73,12 @@ public class DecomposerController : BaseWorkstationController
     }
     
     // ===== 사용 가능한 레시피 찾기 =====
-    private DecomposerRecipe FindAvailableRecipe()
+    private WorkstationRecipe FindAvailableRecipe()
     {
         // null 체크 추가
         if (decomposerData == null)
         {
+            Debug.LogError("DecomposerData가 null입니다!");
             return null;
         }
         
@@ -86,19 +88,35 @@ public class DecomposerController : BaseWorkstationController
             return null;
         }
         
+        Debug.Log($"분해기 레시피 수: {decomposerData.recipes.Count}");
+        
+        // 인벤토리 내용물 디버그 출력
+        var inventoryItems = InventoryManager.instance.GetInventoryItems();
+        Debug.Log($"현재 인벤토리 아이템 수: {inventoryItems.Count}");
+        foreach (var item in inventoryItems)
+        {
+            Debug.Log($"인벤토리: {item.Key.materialName} (ID: {item.Key.materialID}) x{item.Value}");
+        }
+        
         // 인벤토리에서 분해 가능한 첫 번째 레시피 찾기
         foreach (var recipe in decomposerData.recipes)
         {
-            if (recipe.inputItem != null)
+            if (recipe != null && recipe.CanExecute())
             {
-                int itemCount = InventoryManager.instance.GetItemQuantity(recipe.inputItem);
-                if (itemCount >= recipe.inputAmount)
-                {
-                    return recipe;
-                }
+                Debug.Log($"분해 가능한 레시피 발견: {recipe.recipeName}");
+                return recipe;
+            }
+            else if (recipe != null)
+            {
+                Debug.Log($"레시피 '{recipe.recipeName}' 실행 불가 - 재료 부족 또는 조건 미충족");
+            }
+            else
+            {
+                Debug.LogWarning("레시피가 null입니다!");
             }
         }
         
+        Debug.Log("분해 가능한 아이템을 찾지 못했습니다.");
         return null;
     }
     
@@ -139,38 +157,23 @@ public class DecomposerController : BaseWorkstationController
             qualityMultiplier = decomposerData.qualityPenaltyAt20Percent;
         }
         
-        // 각 출력 아이템 처리
-        foreach (var output in state.currentRecipe.outputs)
+        // 보너스 확률 적용
+        float bonusMultiplier = 1f + (decomposerData.bonusOutputChance / 100f);
+        float finalQualityMultiplier = qualityMultiplier * bonusMultiplier;
+        
+        // WorkstationRecipe의 GenerateOutputs 메서드 사용
+        var outputs = state.currentRecipe.GenerateOutputs(finalQualityMultiplier);
+        
+        foreach (var output in outputs)
         {
-            // 기본 확률에 품질 배수 적용
-            float chance = output.chance * qualityMultiplier;
-            
-            // 보너스 확률 추가
-            chance += decomposerData.bonusOutputChance;
-            chance = Mathf.Min(chance, 100f);
-            
-            // 확률 체크
-            if (Random.Range(0f, 100f) <= chance)
-            {
-                // 수량 결정
-                int amount = Random.Range(output.minAmount, output.maxAmount + 1);
-                
-                // 품질이 낮으면 수량도 감소
-                if (qualityMultiplier < 1f)
-                {
-                    amount = Mathf.Max(1, Mathf.RoundToInt(amount * qualityMultiplier));
-                }
-                
-                state.completedItems.Add(new ProcessedItem(output.outputItem, amount));
-                
-                Debug.Log($"분해 결과: {output.outputItem.materialName} x{amount}");
-            }
+            state.completedItems.Add(output);
+            Debug.Log($"분해 결과: {output.item.materialName} x{output.amount}");
         }
         
         // 결과물이 하나도 없는 경우 최소 보장
-        if (state.completedItems.Count == 0 && state.currentRecipe.outputs.Count > 0)
+        if (state.completedItems.Count == 0 && state.currentRecipe.outputItems.Count > 0)
         {
-            var firstOutput = state.currentRecipe.outputs[0];
+            var firstOutput = state.currentRecipe.outputItems[0];
             state.completedItems.Add(new ProcessedItem(firstOutput.outputItem, 1));
             
             Debug.Log("분해 실패... 최소 결과물만 획득");
@@ -209,7 +212,7 @@ public class DecomposerController : BaseWorkstationController
             var availableRecipe = FindAvailableRecipe();
             if (availableRecipe != null)
             {
-                interactionName = $"{availableRecipe.inputItem.materialName} 분해하기";
+                interactionName = $"{availableRecipe.recipeName}";
             }
             else
             {
@@ -222,10 +225,11 @@ public class DecomposerController : BaseWorkstationController
     [ContextMenu("Debug - Add Test Scrap")]
     private void DebugAddScrap()
     {
-        if (decomposerData.recipes.Count > 0 && decomposerData.recipes[0].inputItem != null)
+        if (decomposerData.recipes.Count > 0 && decomposerData.recipes[0] != null && decomposerData.recipes[0].inputItems.Count > 0)
         {
-            InventoryManager.instance.AddItem(decomposerData.recipes[0].inputItem, 5);
-            Debug.Log("테스트용 고철 5개 추가");
+            var firstInput = decomposerData.recipes[0].inputItems[0];
+            InventoryManager.instance.AddItem(firstInput.item, 5);
+            Debug.Log($"테스트용 {firstInput.item.materialName} 5개 추가");
         }
     }
     

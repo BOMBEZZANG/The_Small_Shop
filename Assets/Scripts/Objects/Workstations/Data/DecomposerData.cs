@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class DecomposerData : WorkstationData
 {
     [Header("Decomposer Specific")]
-    public List<DecomposerRecipe> recipes = new List<DecomposerRecipe>();
+    public List<WorkstationRecipe> recipes = new List<WorkstationRecipe>();
     
     [Header("Efficiency")]
     [Range(0.5f, 2f)]
@@ -27,18 +27,4 @@ public class DecomposerData : WorkstationData
     public int durabilityRestoreAmount = 50; // 한 번 수리 시 회복량
 }
 
-[System.Serializable]
-public class DecomposerRecipe
-{
-    public string recipeName;
-    public MaterialData inputItem;
-    public int inputAmount = 1;
-    
-    [Header("Output")]
-    public List<RecipeOutput> outputs = new List<RecipeOutput>();
-    
-    [Header("Processing")]
-    public float processingTime = 5f; // 이 레시피의 처리 시간
-    public int expReward = 5;
-}
 
