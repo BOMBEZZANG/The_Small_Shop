@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad8fb1053338c69459514dc68a7144d9, type: 3}
+  m_Name: Repair_FirstDecomposer
+  m_EditorClassIdentifier: 
+  requirementName: First_Repairment
+  description: Repair_Decomposer
+  requiredItems:
+  - item: {fileID: 11400000, guid: 2659c43771c9a5b479612e4ab2a686c9, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: d7fb565bfabaac94a83be66222de9fce, type: 2}
+    amount: 2
+  durabilityRestore: 50
+  fullRepair: 0
+  isInitialRepair: 1
+  initialRepairMessage: Competed

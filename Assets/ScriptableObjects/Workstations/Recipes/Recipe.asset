@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4527c20108c8c9741988f92c6158e4a1, type: 3}
+  m_Name: Recipe
+  m_EditorClassIdentifier: 
+  recipeName: Decompose_Scarp
+  description: 
+  recipeIcon: {fileID: 0}
+  workstationType: 0
+  category: 0
+  inputItems:
+  - item: {fileID: 11400000, guid: d7fb565bfabaac94a83be66222de9fce, type: 2}
+    amount: 1
+  outputItems:
+  - outputItem: {fileID: 11400000, guid: 721f3ab06e6ef9b48b77ab86ea1be287, type: 2}
+    minAmount: 1
+    maxAmount: 2
+    chance: 80
+  - outputItem: {fileID: 11400000, guid: 0834a909a6340904b99d514793c1ef6a, type: 2}
+    minAmount: 0
+    maxAmount: 1
+    chance: 30
+  - outputItem: {fileID: 11400000, guid: f6e0e76c5053f534fbd1c16b5dcb9da1, type: 2}
+    minAmount: 1
+    maxAmount: 1
+    chance: 100
+  baseProcessingTime: 5
+  expReward: 5
+  requiredPlayerLevel: 0
+  isUnlocked: 1
+  consumeDurability: 1
+  durabilityConsumption: 5

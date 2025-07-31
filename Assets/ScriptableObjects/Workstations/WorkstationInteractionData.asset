@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 102360e5af5b49a42a1235f4f18b4787, type: 3}
+  m_Name: WorkstationInteractionData
+  m_EditorClassIdentifier: 
+  actionName: "\uC0C1\uD638\uC791\uC6A9"
+  iconSprite: {fileID: 0}
+  actionKey: E
+  promptFormat: '[{0}] {1}'
+  progressFormat: "{0} \uC911... {1:0}%"
+  cooldownFormat: "{0:0}\uCD08 \uD6C4 \uAC00\uB2A5"
+  levelRequiredFormat: "\uB808\uBCA8 {0} \uD544\uC694"
+  toolRequiredFormat: "{0} \uD544\uC694"
+  staminaRequiredFormat: "\uC2A4\uD0DC\uBBF8\uB098 {0} \uD544\uC694"
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  disabledColor: {r: 1, g: 1, b: 1, a: 0.5}
+  warningColor: {r: 1, g: 0, b: 0, a: 1}
+  iconOnlyDistance: 3
+  fullTextDistance: 1.5
+  alwaysShowIcon: 0
+  brokenIcon: {fileID: 0}
+  processingIcon: {fileID: 0}
+  completeIcon: {fileID: 0}
+  idleMessage: "\uC0AC\uC6A9\uD558\uAE30"
+  processingMessage: "\uCC98\uB9AC \uC911..."
+  completeMessage: "\uC218\uAC70\uD558\uAE30"
+  brokenMessage: "\uC218\uB9AC\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4"
+  noItemMessage: "\uB123\uC744 \uC544\uC774\uD15C\uC774 \uC5C6\uC2B5\uB2C8\uB2E4"
+  inventoryFullMessage: "\uC778\uBCA4\uD1A0\uB9AC\uAC00 \uAC00\uB4DD \uCC3C\uC2B5\uB2C8\uB2E4"
+  repairPrompt: "\uC218\uB9AC\uD558\uAE30"
+  repairProgressMessage: "\uC218\uB9AC \uC911..."
+  repairCompleteMessage: "\uC218\uB9AC \uC644\uB8CC!"
+  showDurability: 1
+  durabilityFormat: "\uB0B4\uAD6C\uB3C4: {0}%"
+  highDurabilityColor: {r: 0, g: 1, b: 0, a: 1}
+  mediumDurabilityColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  lowDurabilityColor: {r: 1, g: 0, b: 0, a: 1}

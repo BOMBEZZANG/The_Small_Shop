@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3be4c6ed5c9326d4e89e1c9ed07f968e, type: 3}
+  m_Name: Material_Scrap
+  m_EditorClassIdentifier: 
+  materialID: 1001
+  materialName: MatarialScarp
+  materialIcon: {fileID: 1311291321076601056, guid: ce355e466585cbd4fb8238e10e891622, type: 3}
+  materialPrefab: {fileID: 0}
+  materialDescription: 'MaterialScarp '

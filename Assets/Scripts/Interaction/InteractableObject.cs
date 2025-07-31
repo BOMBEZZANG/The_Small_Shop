@@ -14,7 +14,7 @@ public enum InteractionType
 public class InteractableObject : MonoBehaviour
 {
     [Header("Interaction Settings")]
-    [SerializeField] private InteractionType interactionType;
+    [SerializeField] protected InteractionType interactionType;
     [SerializeField] protected string interactionName = "상호작용";  // protected로 변경
     [SerializeField] protected float interactionTime = 0f;           // protected로 변경
     [SerializeField] protected bool isReusable = true;               // protected로 변경
@@ -52,19 +52,19 @@ public class InteractableObject : MonoBehaviour
     private InteractionVisualizer visualizer;
     
     // protected virtual로 변경하여 상속 가능하게
-    protected virtual void Awake()
+protected virtual void Awake()
+{
+    // Collider가 Trigger인지 확인
+    Collider2D col = GetComponent<Collider2D>();
+    col.isTrigger = true;
+    
+    // Visualizer 컴포넌트 확인
+    visualizer = GetComponent<InteractionVisualizer>();
+    if (visualizer == null)
     {
-        // Collider가 Trigger인지 확인
-        Collider2D col = GetComponent<Collider2D>();
-        col.isTrigger = true;
-        
-        // Visualizer 컴포넌트 확인
-        visualizer = GetComponent<InteractionVisualizer>();
-        if (visualizer == null)
-        {
-            visualizer = gameObject.AddComponent<InteractionVisualizer>();
-        }
+        visualizer = gameObject.AddComponent<InteractionVisualizer>();
     }
+}
 
     [System.Obsolete]
     void Update()
@@ -225,4 +225,10 @@ public class InteractableObject : MonoBehaviour
     
     // 진행률 이벤트 (0~1)
     public event System.Action<float> OnInteractionProgress;
+    
+    // 하위 클래스에서 진행률 이벤트를 발생시킬 수 있도록 하는 메서드
+    protected virtual void TriggerProgressEvent(float progress)
+    {
+        OnInteractionProgress?.Invoke(progress);
+    }
 }
