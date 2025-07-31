@@ -8,6 +8,7 @@ public class VisitorNPCController : NPCController
     [SerializeField] private bool checkConditionsOnStart = true;
     [SerializeField] private float checkInterval = 5f;
     [SerializeField] private bool showArrivalEffect = true;
+    [SerializeField] private bool debugForceSpawn = false; // Debug: Force spawn immediately
     
     [Header("Spawn Settings")]
     [SerializeField] private Transform spawnPoint;
@@ -71,8 +72,14 @@ public class VisitorNPCController : NPCController
         // GameObject는 활성 상태 유지, 보이지만 않게
         HideNPC();
         
+        // Debug: Force spawn for testing
+        if (debugForceSpawn)
+        {
+            Debug.Log($"[VisitorNPC] {visitorData.npcName} DEBUG: Force spawning!");
+            StartCoroutine(ForceSpawnDebug());
+        }
         // 조건 체크 시작
-        if (checkConditionsOnStart)
+        else if (checkConditionsOnStart)
         {
             conditionCheckCoroutine = StartCoroutine(ConditionCheckRoutine());
         }
@@ -101,18 +108,25 @@ public class VisitorNPCController : NPCController
     
     private void ShowNPC()
     {
-        Debug.Log("[VisitorNPC] ShowNPC 실행!");
+        Debug.Log($"[VisitorNPC] ShowNPC 실행! GameObject active: {gameObject.activeInHierarchy}");
         isHidden = false;
         
         // 렌더러 활성화
         if (spriteRenderer != null)
         {
             spriteRenderer.enabled = true;
-            Debug.Log($"[VisitorNPC] SpriteRenderer 활성화: {spriteRenderer.enabled}");
+            Debug.Log($"[VisitorNPC] SpriteRenderer 활성화: {spriteRenderer.enabled}, Sprite: {spriteRenderer.sprite?.name ?? "NULL"}");
+            Debug.Log($"[VisitorNPC] Renderer bounds: {spriteRenderer.bounds}");
         }
         else
         {
             Debug.LogError("[VisitorNPC] SpriteRenderer가 null입니다!");
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                Debug.Log("[VisitorNPC] SpriteRenderer 재획득 성공!");
+                spriteRenderer.enabled = true;
+            }
         }
         
         // 콜라이더 활성화
@@ -123,7 +137,8 @@ public class VisitorNPCController : NPCController
             Debug.Log("[VisitorNPC] Collider 활성화");
         }
         
-        Debug.Log($"[VisitorNPC] 현재 위치: {transform.position}");
+        Debug.Log($"[VisitorNPC] 현재 위치: {transform.position}, Layer: {gameObject.layer}");
+        Debug.Log($"[VisitorNPC] Parent: {transform.parent?.name ?? "No Parent"}");
     }
 
     // ===== 방문 시작 수정 =====
@@ -342,19 +357,32 @@ public class VisitorNPCController : NPCController
         }
     }
     
+    private IEnumerator ForceSpawnDebug()
+    {
+        Debug.Log($"[VisitorNPC] DEBUG: Waiting 1 second before force spawn...");
+        yield return new WaitForSeconds(1f);
+        StartVisit();
+    }
+    
     private IEnumerator ConditionCheckRoutine()
     {
+        Debug.Log($"[VisitorNPC] {visitorData.npcName}: 조건 체크 시작 - Required Level: {visitorData.requiredPlayerLevel}");
+        
         while (visitorState == VisitorState.Waiting)
         {
+            Debug.Log($"[VisitorNPC] {visitorData.npcName}: 조건 체크 중... Player Level: {PlayerDataManager.instance.GetLevel()}");
+            
             if (visitorData.CheckVisitConditions())
             {
                 Debug.Log($"[VisitorNPC] {visitorData.npcName}: 방문 조건 충족!");
                 
                 if (visitorData.visitDelay > 0)
                 {
+                    Debug.Log($"[VisitorNPC] {visitorData.npcName}: {visitorData.visitDelay}초 대기 중...");
                     yield return new WaitForSeconds(visitorData.visitDelay);
                 }
                 
+                Debug.Log($"[VisitorNPC] {visitorData.npcName}: StartVisit() 호출!");
                 StartVisit();
                 break;
             }

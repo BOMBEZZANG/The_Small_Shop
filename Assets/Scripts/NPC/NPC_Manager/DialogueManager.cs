@@ -19,6 +19,7 @@ public class DialogueManager : MonoBehaviour
     private DialogueData currentDialogue;
     private int currentLineIndex = 0;
     private NPCData currentNPC;
+    private Transform currentNPCTransform;
     
     // 대화 기록 (선택적)
     private List<int> completedDialogues = new List<int>();
@@ -48,6 +49,13 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    // ===== 대화 시작 (Transform 포함) =====
+    public void StartDialogue(DialogueData dialogue, NPCData npc, Transform npcTransform)
+    {
+        currentNPCTransform = npcTransform;
+        StartDialogue(dialogue, npc);
+    }
+    
     // ===== 대화 시작 =====
     [Obsolete]
     public void StartDialogue(DialogueData dialogue, NPCData npc = null)
@@ -361,6 +369,7 @@ public class DialogueManager : MonoBehaviour
         isInDialogue = false;
         currentDialogue = null;
         currentNPC = null;
+        currentNPCTransform = null;
         currentLineIndex = 0;
         
         // 이벤트 발생
@@ -383,6 +392,7 @@ public class DialogueManager : MonoBehaviour
     public bool IsInDialogue() => isInDialogue;
     public DialogueData GetCurrentDialogue() => currentDialogue;
     public NPCData GetCurrentNPC() => currentNPC;
+    public Transform GetCurrentNPCTransform() => currentNPCTransform;
     
     // ===== 대화 기록 확인 =====
     public bool HasCompletedDialogue(int dialogueID)

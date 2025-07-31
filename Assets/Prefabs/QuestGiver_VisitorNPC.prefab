@@ -263,7 +263,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   interactionData: {fileID: 11400000, guid: be09110243cb6d14cba4409fbe4b9992, type: 2}
-  npcData: {fileID: 11400000, guid: 697746e7867350b409b8dfe216dcc7a0, type: 2}
+  npcData: {fileID: 11400000, guid: 4d7a72d48b8b06a418bfe979db7e9d53, type: 2}
   playerDetectionRange: 5
   playerLayer:
     serializedVersion: 2
@@ -278,6 +278,8 @@ MonoBehaviour:
   spawnPoint: {fileID: 0}
   spawnDistance: 10
   arrivalEffectPrefab: {fileID: 0}
+  showCurrentPathTarget: 1
+  targetPointColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &4707921729687417401
 GameObject:
   m_ObjectHideFlags: 0

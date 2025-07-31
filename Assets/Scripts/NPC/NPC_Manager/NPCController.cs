@@ -290,7 +290,7 @@ public abstract class NPCController : InteractableObject
         HideAllIndicators();
         
         // 대화 시작
-        DialogueManager.instance.StartDialogue(currentAvailableDialogue, npcData);
+        DialogueManager.instance.StartDialogue(currentAvailableDialogue, npcData, transform);
         hasSpokenToPlayer = true;
         
         // 대화 종료 이벤트 구독
