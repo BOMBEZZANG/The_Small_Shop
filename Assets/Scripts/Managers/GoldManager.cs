@@ -61,6 +61,17 @@ public class GoldManager : MonoBehaviour
         return currentGold;
     }
     
+    // Shop system compatibility methods
+    public int GetCurrentGold()
+    {
+        return currentGold;
+    }
+    
+    public bool HasEnoughGold(int amount)
+    {
+        return currentGold >= amount;
+    }
+    
     // 치트 or 테스트용
     public void SetGold(int amount)
     {

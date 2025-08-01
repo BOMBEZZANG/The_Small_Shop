@@ -11,4 +11,8 @@ public class MaterialData : ScriptableObject
     public GameObject materialPrefab; // 바닥에 떨어졌을 때의 모습
     [TextArea]
     public string materialDescription;
+    
+    [Header("Shop System")]
+    [Tooltip("기본 가치 (상점 가격 계산의 기준)")]
+    public int baseValue = 10; // Shop system pricing base
 }

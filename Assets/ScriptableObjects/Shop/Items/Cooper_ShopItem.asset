@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb64781b0b1443847850210df453020c, type: 3}
+  m_Name: Cooper_ShopItem
+  m_EditorClassIdentifier: 
+  materialData: {fileID: 11400000, guid: 0834a909a6340904b99d514793c1ef6a, type: 2}
+  isAvailableForBuying: 0
+  isAvailableForSelling: 1
+  hasUnlimitedStock: 1
+  maxStock: 10
+  currentStock: 10
+  stockRefreshHours: 0
+  lastRefreshTime: 46.316788
+  customBuyPrice: 0
+  customSellPrice: 0
+  requiresUnlock: 0
+  requiredPlayerLevel: 0
+  priceMultiplier: 1

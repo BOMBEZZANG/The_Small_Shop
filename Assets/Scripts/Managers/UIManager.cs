@@ -9,8 +9,14 @@ public class UIManager : MonoBehaviour
     public InventoryUI inventoryUI;
     public GameStatusUI gameStatusUI;
     public PlayerStatusUI playerStatusUI;  // 새로 추가
-    public DialogueUI dialogueUI; 
+    public DialogueUI dialogueUI;
+    
+    [Header("Interaction UI")]
+    public GameObject interactionPrompt; // 상호작용 프롬프트 UI
+    public TMPro.TextMeshProUGUI interactionPromptText; // 프롬프트 텍스트
+    
     private bool isInventoryOpen = false;
+    private bool isInteractionPromptVisible = false;
 
     void Awake()
     {
@@ -165,6 +171,39 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log($"알림: {message}");
         // TODO: 실제 알림 UI 구현
+    }
+    
+    // ===== 상호작용 프롬프트 =====
+    public void ShowInteractionPrompt(string promptText)
+    {
+        if (interactionPrompt != null)
+        {
+            interactionPrompt.SetActive(true);
+            isInteractionPromptVisible = true;
+        }
+        
+        if (interactionPromptText != null)
+        {
+            interactionPromptText.text = promptText;
+        }
+        
+        Debug.Log($"상호작용 프롬프트: {promptText}");
+    }
+    
+    public void HideInteractionPrompt()
+    {
+        if (interactionPrompt != null)
+        {
+            interactionPrompt.SetActive(false);
+            isInteractionPromptVisible = false;
+        }
+        
+        Debug.Log("상호작용 프롬프트 숨김");
+    }
+    
+    public bool IsInteractionPromptVisible()
+    {
+        return isInteractionPromptVisible;
     }
     
     public void LogCurrentStatus()
