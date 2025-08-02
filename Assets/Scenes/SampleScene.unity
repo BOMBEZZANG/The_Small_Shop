@@ -36860,6 +36860,7 @@ GameObject:
   - component: {fileID: 1483128552}
   - component: {fileID: 1483128554}
   - component: {fileID: 1483128555}
+  - component: {fileID: 1483128556}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -37062,6 +37063,26 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   showDebugGizmos: 1
+--- !u!114 &1483128556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483128547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff0a385f63dc3146b6036dc194ea9ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxInteractionDistance: 3
+  shopLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  interactionKey: 101
+  showDebugGizmos: 0
+  showInteractionPrompts: 1
+  promptUpdateInterval: 0.1
 --- !u!1 &1485858072
 GameObject:
   m_ObjectHideFlags: 0

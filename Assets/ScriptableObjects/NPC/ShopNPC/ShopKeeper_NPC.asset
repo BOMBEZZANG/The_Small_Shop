@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea04763a2ea6e97438eeca8c9d16b858, type: 3}
+  m_Name: ShopKeeper_NPC
+  m_EditorClassIdentifier: 
+  npcID: 4000
+  npcName: Merchant
+  npcType: 2
+  npcPrefab: {fileID: 4917901514005777019, guid: 61cf18ee9a1b378428d2ce155f67e8e4, type: 3}
+  npcPortrait: {fileID: 0}
+  animator: {fileID: 0}
+  availableDialogues: []
+  defaultDialogue: {fileID: 0}
+  interactionRange: 2
+  indicatorOffset: {x: 0, y: 2, z: 0}
+  greetingSound: {fileID: 0}
+  footstepSounds: []
+  associatedShop: {fileID: 11400000, guid: 3edc8d7a3b8e99346a141fb9051a0450, type: 2}
+  workPosition: {fileID: 0}
+  requiresGreeting: 1
+  alwaysAtShop: 1
+  followsShopHours: 1
+  customWorkHours: {x: 9, y: 18}
+  greetingCustomerDialogue: {fileID: 11400000, guid: 87dbf7cac099f56419a8aff6f7a60cb3, type: 2}
+  regularCustomerDialogue: {fileID: 11400000, guid: acf0499a37b97da4488e1d4c7a0681ca, type: 2}
+  shopClosedDialogue: {fileID: 11400000, guid: 17aa116e131ca244488025eb961b54fc, type: 2}
+  farewellDialogue: {fileID: 11400000, guid: 51bad196aa745f449afa20f12ec36dfe, type: 2}
+  noMoneyDialogue: {fileID: 11400000, guid: b658b4e852a21f84282e9b78478f7b35, type: 2}
+  thankYouDialogue: {fileID: 11400000, guid: 51bad196aa745f449afa20f12ec36dfe, type: 2}
+  personality: 0
+  remembersCustomers: 1
+  loyaltyDiscountThreshold: 5
+  announcesNewItems: 1
+  givesShoppingTips: 1
+  offersPersonalStories: 0
