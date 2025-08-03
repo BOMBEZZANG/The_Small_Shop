@@ -21,6 +21,7 @@ public class ShopInteractionController : MonoBehaviour
     private List<ShopController> shopsInRange = new List<ShopController>();
     private float lastPromptUpdate = 0f;
     private bool isInteractionLocked = false;
+    private bool isInitialized = false;
     
     // Events
     public System.Action<ShopController> OnNearestShopChanged;
@@ -31,27 +32,139 @@ public class ShopInteractionController : MonoBehaviour
     public ShopController NearestShop => nearestShop;
     public bool HasShopsInRange => shopsInRange.Count > 0;
     public int ShopsInRangeCount => shopsInRange.Count;
+    public bool IsInitialized => isInitialized;
     
     void Awake()
     {
-        playerController = GetComponent<PlayerController>();
+        // Awake에서는 아무것도 하지 않음 - DontDestroyOnLoad 환경 대응
+    }
+    
+    // OnEnable은 오브젝트가 활성화될 때마다 호출됨 (씬 전환 후에도)
+    void OnEnable()
+    {
+        // 컴포넌트 초기화 시도
+        TryInitializeComponents();
+    }
+    
+    private void TryInitializeComponents()
+    {
+        if (isInitialized) return;
         
+        // Method 1: Try to find PlayerController using FindObjectOfType (most reliable for cross-scene)
+        playerController = FindObjectOfType<PlayerController>();
+        
+        // Method 2: Try to find by Player tag if the above fails
         if (playerController == null)
         {
-            Debug.LogError("ShopInteractionController requires a PlayerController component!");
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                playerController = playerObj.GetComponent<PlayerController>();
+            }
+        }
+        
+        // Method 3: If we're on the player object itself, try local component search
+        if (playerController == null)
+        {
+            playerController = GetComponent<PlayerController>();
+            if (playerController == null)
+            {
+                playerController = GetComponentInParent<PlayerController>();
+            }
+            if (playerController == null)
+            {
+                playerController = GetComponentInChildren<PlayerController>();
+            }
+        }
+        
+        if (playerController != null)
+        {
+            isInitialized = true;
+            Debug.Log($"ShopInteractionController initialized successfully. PlayerController found on: {playerController.gameObject.name}");
+        }
+        else
+        {
+            Debug.LogWarning("PlayerController not found, will retry...");
         }
     }
     
     void Start()
     {
-        // Subscribe to shop manager events
-        SubscribeToEvents();
+        // 초기화되지 않았으면 재시도
+        if (!isInitialized)
+        {
+            TryInitializeComponents();
+        }
         
-        Debug.Log("ShopInteractionController initialized");
+        // 초기화되었으면 이벤트 구독
+        if (isInitialized)
+        {
+            // Subscribe to shop manager events
+            SubscribeToEvents();
+            
+            Debug.Log("ShopInteractionController initialized");
+        }
+        else
+        {
+            // Start coroutine for delayed initialization
+            StartCoroutine(DelayedInitialization());
+        }
+    }
+    
+    private System.Collections.IEnumerator DelayedInitialization()
+    {
+        float timeout = 5f; // 5 seconds timeout
+        float elapsed = 0f;
+        
+        Debug.Log($"ShopInteractionController starting delayed initialization on GameObject: {gameObject.name}");
+        
+        while (!isInitialized && elapsed < timeout)
+        {
+            yield return new WaitForSeconds(0.1f); // Check every 0.1 seconds
+            elapsed += 0.1f;
+            
+            TryInitializeComponents();
+            
+            if (isInitialized)
+            {
+                SubscribeToEvents();
+                Debug.Log($"ShopInteractionController initialized after {elapsed:F1} seconds");
+                yield break;
+            }
+        }
+        
+        if (!isInitialized)
+        {
+            // Additional debug information
+            Debug.LogError($"ShopInteractionController failed to initialize after {timeout} seconds on GameObject: {gameObject.name}");
+            Debug.LogError($"Current scene: {UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}");
+            
+            // Try to find all PlayerControllers in the scene for debugging
+            var allPlayerControllers = FindObjectsOfType<PlayerController>();
+            Debug.LogError($"Found {allPlayerControllers.Length} PlayerController(s) in scene");
+            foreach (var pc in allPlayerControllers)
+            {
+                Debug.LogError($"  - PlayerController found on: {pc.gameObject.name} (active: {pc.gameObject.activeInHierarchy})");
+            }
+            
+            // Check for Player tagged objects
+            var playerTaggedObjects = GameObject.FindGameObjectsWithTag("Player");
+            Debug.LogError($"Found {playerTaggedObjects.Length} GameObject(s) with 'Player' tag");
+            foreach (var obj in playerTaggedObjects)
+            {
+                Debug.LogError($"  - Player tagged object: {obj.name} (active: {obj.activeInHierarchy})");
+            }
+        }
     }
     
     void Update()
     {
+        // Skip if not initialized (the coroutine will handle initialization)
+        if (!isInitialized)
+        {
+            return;
+        }
+        
         // Update shops in range
         UpdateShopsInRange();
         
@@ -64,6 +177,20 @@ public class ShopInteractionController : MonoBehaviour
         
         // Handle interaction input
         HandleInteractionInput();
+    }
+    
+    void OnDisable()
+    {
+        // 씬 전환 시 상태 리셋
+        ClearShopInteractions();
+        UnsubscribeFromEvents();
+    }
+    
+    private void ClearShopInteractions()
+    {
+        nearestShop = null;
+        shopsInRange.Clear();
+        isInteractionLocked = false;
     }
     
     // ===== Shop Detection =====
@@ -173,7 +300,10 @@ public class ShopInteractionController : MonoBehaviour
         
         // Check if player is in range
         float distance = Vector2.Distance(transform.position, shop.transform.position);
-        if (distance > maxInteractionDistance) return false;
+        if (distance > maxInteractionDistance)
+        {
+            return false;
+        }
         
         // Check if shop manager allows interaction
         if (ShopManager.instance == null) return false;
@@ -218,6 +348,17 @@ public class ShopInteractionController : MonoBehaviour
     {
         if (UIManager.instance == null || !showInteractionPrompts) return;
         
+        // Don't show prompts if shop is already open
+        if (ShopManager.instance != null && ShopManager.instance.IsShopOpen)
+        {
+            UIManager.instance.HideInteractionPrompt();
+            if (InteractionPromptManager.instance != null)
+            {
+                InteractionPromptManager.instance.HideInteractionPrompt();
+            }
+            return;
+        }
+        
         if (nearestShop != null)
         {
             string promptText = GetInteractionPromptText(nearestShop);
@@ -236,41 +377,52 @@ public class ShopInteractionController : MonoBehaviour
         // Check if shop is currently open in UI
         if (ShopManager.instance.IsShopOpen && ShopManager.instance.CurrentShop == shop.ShopData)
         {
-            return $"[{interactionKey}] {shop.ShopName} 닫기";
+            return $"[{interactionKey}] {shop.ShopName} Close";
         }
         
         // Check if shop is available
         if (!shop.IsShopOpen)
         {
-            return $"{shop.ShopName} (영업 종료)";
+            return $"{shop.ShopName} (Close)";
         }
         
         // Regular interaction prompt
-        return $"[{interactionKey}] {shop.ShopName}에서 거래하기";
+        return $"[Buy&Sell";
     }
     
     // ===== Event Management =====
     
     private void SubscribeToEvents()
     {
-        ShopManager.OnShopOpened += OnShopOpened;
-        ShopManager.OnShopClosed += OnShopClosed;
+        if (ShopManager.instance != null)
+        {
+            ShopManager.OnShopOpened += OnShopOpened;
+            ShopManager.OnShopClosed += OnShopClosed;
+        }
     }
     
     private void UnsubscribeFromEvents()
     {
-        ShopManager.OnShopOpened -= OnShopOpened;
-        ShopManager.OnShopClosed -= OnShopClosed;
+        if (ShopManager.instance != null)
+        {
+            ShopManager.OnShopOpened -= OnShopOpened;
+            ShopManager.OnShopClosed -= OnShopClosed;
+        }
     }
     
     private void OnShopOpened(ShopData shopData)
     {
         Debug.Log($"Shop opened: {shopData.shopName}");
         
-        // Update prompts
-        if (showInteractionPrompts)
+        // Hide interaction prompts when shop opens (both systems)
+        if (UIManager.instance != null)
         {
-            UpdateInteractionPrompts();
+            UIManager.instance.HideInteractionPrompt();
+        }
+        
+        if (InteractionPromptManager.instance != null)
+        {
+            InteractionPromptManager.instance.HideInteractionPrompt();
         }
     }
     
@@ -377,54 +529,45 @@ public class ShopInteractionController : MonoBehaviour
             float distance = Vector2.Distance(transform.position, shop.transform.position);
             
             Debug.Log($"{i + 1}. {shop.ShopName} - Distance: {distance:F1}m - " +
-                     $"Status: {(shop.IsShopOpen ? "OPEN" : "CLOSED")}");
+                     $"Status: {(shop.IsShopOpen ? "Open" : "Closed")}");
         }
-        
-        if (nearestShop != null)
+    }
+    
+    [ContextMenu("Debug - Force Reinitialize")]
+    private void ForceReinitialize()
+    {
+        isInitialized = false;
+        playerController = null;
+        UnsubscribeFromEvents();
+        TryInitializeComponents();
+        if (isInitialized)
         {
-            Debug.Log($"Nearest: {nearestShop.ShopName}");
+            SubscribeToEvents();
         }
     }
     
-    [ContextMenu("Debug - Force Interact With Nearest")]
-    public void DebugForceInteract()
+    [ContextMenu("Debug - Check Component State")]
+    private void DebugCheckComponentState()
     {
-        TryInteractWithNearestShop();
-    }
-    
-    [ContextMenu("Debug - Toggle Debug Gizmos")]
-    public void DebugToggleGizmos()
-    {
-        showDebugGizmos = !showDebugGizmos;
+        Debug.Log($"=== ShopInteractionController Debug Info ===\n" +
+                 $"Is Initialized: {isInitialized}\n" +
+                 $"PlayerController: {(playerController != null ? "Found" : "Not Found")}\n" +
+                 $"Shops in Range: {shopsInRange.Count}\n" +
+                 $"Nearest Shop: {(nearestShop != null ? nearestShop.ShopName : "None")}\n" +
+                 $"Interaction Locked: {isInteractionLocked}\n" +
+                 $"Show Prompts: {showInteractionPrompts}\n" +
+                 $"Max Distance: {maxInteractionDistance}");
     }
     
     // ===== Gizmos =====
     
-    // ===== Utility Methods =====
-    
-    private void DrawWireCircle(Vector3 center, float radius)
-    {
-        // Draw a circle using line segments
-        int segments = 32;
-        float angleStep = 360f / segments;
-        Vector3 prevPoint = center + new Vector3(radius, 0, 0);
-        
-        for (int i = 1; i <= segments; i++)
-        {
-            float angle = i * angleStep * Mathf.Deg2Rad;
-            Vector3 newPoint = center + new Vector3(Mathf.Cos(angle) * radius, Mathf.Sin(angle) * radius, 0);
-            Gizmos.DrawLine(prevPoint, newPoint);
-            prevPoint = newPoint;
-        }
-    }
-    
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         if (!showDebugGizmos) return;
         
-        // Draw interaction range
-        Gizmos.color = Color.cyan;
-        DrawWireCircle(transform.position, maxInteractionDistance);
+        // Draw interaction range (2D circle using 3D sphere)
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, maxInteractionDistance);
         
         // Draw lines to shops in range
         Gizmos.color = Color.green;
@@ -439,41 +582,17 @@ public class ShopInteractionController : MonoBehaviour
         // Highlight nearest shop
         if (nearestShop != null)
         {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawLine(transform.position, nearestShop.transform.position);
-            Gizmos.DrawWireSphere(nearestShop.transform.position, 0.5f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(nearestShop.transform.position, Vector3.one * 0.5f);
         }
     }
     
-    void OnDrawGizmosSelected()
+    // Inspector에서 컴포넌트 상태 확인용 (Play 모드에서만)
+    void OnValidate()
     {
-        // Always draw interaction range when selected
-        Gizmos.color = Color.cyan;
-        DrawWireCircle(transform.position, maxInteractionDistance);
-        
-        // Draw shop info
-        #if UNITY_EDITOR
-        string info = $"Shop Interaction\nRange: {maxInteractionDistance}m\n" +
-                     $"Shops in Range: {shopsInRange.Count}\n" +
-                     $"Nearest: {nearestShop?.ShopName ?? "None"}";
-                     
-        UnityEditor.Handles.Label(
-            transform.position + Vector3.up * 2f,
-            info
-        );
-        #endif
-    }
-    
-    // ===== Cleanup =====
-    
-    void OnDestroy()
-    {
-        UnsubscribeFromEvents();
-        
-        // Clear UI prompts
-        if (UIManager.instance != null)
+        if (Application.isPlaying && !isInitialized)
         {
-            UIManager.instance.HideInteractionPrompt();
+            TryInitializeComponents();
         }
     }
 }

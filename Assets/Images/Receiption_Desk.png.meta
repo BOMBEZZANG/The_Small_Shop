@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5f63eb8a2cbae354983cfa7f0bf2efd0
+guid: 65b0503a54c80ee4d92a2fc1fc4709b8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5187565832217461001
-    second: ShopKeeper_0
+      213: -9043506871658630515
+    second: Receiption_Desk_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ShopKeeper_0
+      name: Receiption_Desk_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 0
-        width: 24
-        height: 64
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
+        x: 0
+        y: 18
+        width: 128
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9018646b3afedf740800000000000000
-      internalID: 5187565832217461001
+      spriteID: d82bbfe2a620f7280800000000000000
+      internalID: -9043506871658630515
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 261d025f3d53f71408f6a9eb25d48a71
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ShopKeeper_0: 5187565832217461001
+      Receiption_Desk_0: -9043506871658630515
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
