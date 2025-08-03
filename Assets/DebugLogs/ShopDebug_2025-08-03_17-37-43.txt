@@ -1,0 +1,75 @@
+Shop Debug Log - 2025-08-03 17:37:43
+================================================
+
+
+------------------------
+
+[17:37:43.914] [ShopUI] === OPENING SHOP ===
+[17:37:43.915] [ShopUI] Shop Data: General Store
+[17:37:43.916] [ShopUI] Shop has 2 categories
+[17:37:43.916] [ShopUI] CategoryUI component found! Reference: Category_UI_Status
+[17:37:43.916] [ShopUI] Setting up 2 categories
+[17:37:43.917] [ShopUI] Category [0]: Name='Materials', ShowInUI=True, SortOrder=2
+[17:37:43.917] [ShopUI] Category [1]: Name='Tools', ShowInUI=True, SortOrder=0
+[17:37:43.917] [ShopCategoryUI] === SETUP CATEGORIES CALLED ===
+[17:37:43.921] [ShopCategoryUI] Received 2 categories
+[17:37:43.921] [ShopCategoryUI] Input Category [0]: Materials, ShowInUI: True
+[17:37:43.921] [ShopCategoryUI] Input Category [1]: Tools, ShowInUI: True
+[17:37:43.923] [ShopCategoryUI] After filtering: 2 available categories
+[17:37:43.923] [ShopCategoryUI] === CREATE CATEGORY BUTTONS ===
+[17:37:43.924] [ShopCategoryUI] Container: CategoryButtonContainer, Prefab: CategoryButtonPrefab
+[17:37:43.925] [ShopCategoryUI] Creating 2 category buttons
+[17:37:43.926] [ShopCategoryUI] Creating button for category: Tools
+[17:37:43.928] [ShopCategoryUI] Button created successfully: CategoryButtonPrefab(Clone)
+[17:37:43.930] [ShopCategoryUI] Creating button for category: Materials
+[17:37:43.930] [ShopCategoryUI] Button created successfully: CategoryButtonPrefab(Clone)
+[17:37:43.932] [ShopCategoryUI] Created 2 buttons total
+[17:37:43.932] [ShopCategoryUI] Category panel set to: ACTIVE
+[17:37:43.933] [ShopCategoryUI] Selecting 'Show All' by default
+[17:37:43.934] [ShopCategoryUI] === UPDATE SELECTED CATEGORY DISPLAY ===
+[17:37:43.934] [ShopCategoryUI] Current selected category: None (Show All)
+[17:37:43.935] [ShopCategoryUI] Set selectedCategoryText to: 'All Categories'
+[17:37:43.936] [ShopCategoryUI] Category icon deactivated (no icon)
+[17:37:43.936] [ShopCategoryUI] Set category description to: '모든 카테고리의 아이템을 표시합니다.'
+[17:37:43.944] [ShopUI] Shop UI opened successfully: General Store
+
+------------------------
+
+[17:37:43.947] [ShopUI] === OPENING SHOP ===
+[17:37:43.947] [ShopUI] Shop Data: General Store
+[17:37:43.947] [ShopUI] Shop has 2 categories
+[17:37:43.947] [ShopUI] CategoryUI component found! Reference: Category_UI_Status
+[17:37:43.949] [ShopUI] Setting up 2 categories
+[17:37:43.950] [ShopUI] Category [0]: Name='Materials', ShowInUI=True, SortOrder=2
+[17:37:43.950] [ShopUI] Category [1]: Name='Tools', ShowInUI=True, SortOrder=0
+[17:37:43.950] [ShopCategoryUI] === SETUP CATEGORIES CALLED ===
+[17:37:43.951] [ShopCategoryUI] Received 2 categories
+[17:37:43.951] [ShopCategoryUI] Input Category [0]: Materials, ShowInUI: True
+[17:37:43.951] [ShopCategoryUI] Input Category [1]: Tools, ShowInUI: True
+[17:37:43.952] [ShopCategoryUI] After filtering: 2 available categories
+[17:37:43.952] [ShopCategoryUI] === CREATE CATEGORY BUTTONS ===
+[17:37:43.952] [ShopCategoryUI] Container: CategoryButtonContainer, Prefab: CategoryButtonPrefab
+[17:37:43.953] [ShopCategoryUI] Creating 2 category buttons
+[17:37:43.953] [ShopCategoryUI] Creating button for category: Tools
+[17:37:43.954] [ShopCategoryUI] Button created successfully: CategoryButtonPrefab(Clone)
+[17:37:43.954] [ShopCategoryUI] Creating button for category: Materials
+[17:37:43.955] [ShopCategoryUI] Button created successfully: CategoryButtonPrefab(Clone)
+[17:37:43.955] [ShopCategoryUI] Created 2 buttons total
+[17:37:43.956] [ShopCategoryUI] Category panel set to: ACTIVE
+[17:37:43.957] [ShopCategoryUI] Selecting 'Show All' by default
+[17:37:43.957] [ShopCategoryUI] === UPDATE SELECTED CATEGORY DISPLAY ===
+[17:37:43.958] [ShopCategoryUI] Current selected category: None (Show All)
+[17:37:43.958] [ShopCategoryUI] Set selectedCategoryText to: 'All Categories'
+[17:37:43.958] [ShopCategoryUI] Category icon deactivated (no icon)
+[17:37:43.959] [ShopCategoryUI] Set category description to: '모든 카테고리의 아이템을 표시합니다.'
+[17:37:43.961] [ShopUI] Shop UI opened successfully: General Store
+[17:37:46.667] [ShopCategoryUI] === UPDATE SELECTED CATEGORY DISPLAY ===
+[17:37:46.667] [ShopCategoryUI] Current selected category: None (Show All)
+[17:37:46.668] [ShopCategoryUI] Set selectedCategoryText to: 'All Categories'
+[17:37:46.668] [ShopCategoryUI] Category icon deactivated (no icon)
+[17:37:46.668] [ShopCategoryUI] Set category description to: '모든 카테고리의 아이템을 표시합니다.'
+[17:37:55.327] [ShopCategoryUI] === UPDATE SELECTED CATEGORY DISPLAY ===
+[17:37:55.328] [ShopCategoryUI] Current selected category: None (Show All)
+[17:37:55.328] [ShopCategoryUI] Set selectedCategoryText to: 'All Categories'
+[17:37:55.328] [ShopCategoryUI] Category icon deactivated (no icon)
+[17:37:55.329] [ShopCategoryUI] Set category description to: '모든 카테고리의 아이템을 표시합니다.'

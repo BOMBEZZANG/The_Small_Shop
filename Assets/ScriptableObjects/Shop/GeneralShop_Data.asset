@@ -19,8 +19,13 @@ MonoBehaviour:
   isAlwaysOpen: 1
   allowBuying: 1
   allowSelling: 1
-  supportedCategories: []
-  shopInventory: []
+  supportedCategories:
+  - {fileID: 11400000, guid: 3daad6d62502dc9418e1c66144c4ccf8, type: 2}
+  - {fileID: 11400000, guid: 8bbab22e41a483745b8d75589ae91452, type: 2}
+  shopInventory:
+  - {fileID: 11400000, guid: 764f3e8f9f5418c41a9c98dbdf898ba2, type: 2}
+  - {fileID: 11400000, guid: f4c57c2cde7ca0c499b399a023f4ed74, type: 2}
+  - {fileID: 11400000, guid: 1bd10a1b7372f134fa061bd37ee202c4, type: 2}
   buyPriceMultiplier: 1.2
   sellPriceMultiplier: 0.5
   specializedItems: []

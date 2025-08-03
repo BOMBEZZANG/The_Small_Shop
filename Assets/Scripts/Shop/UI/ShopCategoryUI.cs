@@ -57,11 +57,20 @@ public class ShopCategoryUI : MonoBehaviour
     
     void Start()
     {
-        // Initially hide if no categories
-        if (categoryPanel != null)
-        {
-            categoryPanel.SetActive(false);
-        }
+        ShopDebugLogger.Log("=== SHOP CATEGORY UI STARTED ===", "ShopCategoryUI");
+        
+        // Check all critical references
+        ShopDebugLogger.Log($"selectedCategoryText: {(selectedCategoryText != null ? "Assigned" : "NULL")}", "ShopCategoryUI");
+        ShopDebugLogger.Log($"selectedCategoryIcon: {(selectedCategoryIcon != null ? "Assigned" : "NULL")}", "ShopCategoryUI");
+        ShopDebugLogger.Log($"categoryDescriptionText: {(categoryDescriptionText != null ? "Assigned" : "NULL")}", "ShopCategoryUI");
+        ShopDebugLogger.Log($"showAllButton: {(showAllButton != null ? "Assigned" : "NULL")}", "ShopCategoryUI");
+        ShopDebugLogger.Log($"showAllButtonText: {(showAllButtonText != null ? "Assigned" : "NULL")}", "ShopCategoryUI");
+        ShopDebugLogger.Log($"categoryButtonPrefab: {(categoryButtonPrefab != null ? "Assigned" : "NULL")}", "ShopCategoryUI");
+        ShopDebugLogger.Log($"categoryButtonContainer: {(categoryButtonContainer != null ? "Assigned" : "NULL")}", "ShopCategoryUI");
+        ShopDebugLogger.Log($"categoryPanel: {(categoryPanel != null ? "Assigned" : "NULL")}", "ShopCategoryUI");
+        
+        if (selectedCategoryText == null)
+            ShopDebugLogger.LogError("selectedCategoryText is NULL! This will prevent category names from showing!", "ShopCategoryUI");
     }
     
     private void SetupUI()
@@ -77,49 +86,90 @@ public class ShopCategoryUI : MonoBehaviour
             showAllButtonText.text = showAllText;
         }
     }
-    
+
     // ===== Category Setup =====
-    
+
     public void SetupCategories(List<ShopCategoryData> categories)
     {
+        ShopDebugLogger.Log("=== SETUP CATEGORIES CALLED ===", "ShopCategoryUI");
+        ShopDebugLogger.Log($"Received {categories?.Count ?? 0} categories", "ShopCategoryUI");
+        
+        if (categories == null)
+        {
+            ShopDebugLogger.LogError("Categories list is NULL!", "ShopCategoryUI");
+            return;
+        }
+        
+        // Log each category before filtering
+        for (int i = 0; i < categories.Count; i++)
+        {
+            if (categories[i] != null)
+            {
+                ShopDebugLogger.Log($"Input Category [{i}]: {categories[i].categoryName}, ShowInUI: {categories[i].showInShopUI}", "ShopCategoryUI");
+            }
+        }
+        
         // Filter and sort categories
         availableCategories = categories
             .Where(cat => cat != null && cat.showInShopUI)
             .OrderBy(cat => cat.sortOrder)
             .ThenBy(cat => cat.categoryName)
             .ToList();
-        
+
+        ShopDebugLogger.Log($"After filtering: {availableCategories.Count} available categories", "ShopCategoryUI");
+
         // Create category buttons
         CreateCategoryButtons();
-        
+
         // Show/hide panel based on available categories
         bool hasCategories = availableCategories.Count > 0;
         if (categoryPanel != null)
         {
             categoryPanel.SetActive(hasCategories);
+            ShopDebugLogger.Log($"Category panel set to: {(hasCategories ? "ACTIVE" : "INACTIVE")}", "ShopCategoryUI");
         }
-        
+        else
+        {
+            ShopDebugLogger.LogError("categoryPanel reference is NULL!", "ShopCategoryUI");
+        }
+
         // Select "Show All" by default
         if (hasCategories)
         {
+            ShopDebugLogger.Log("Selecting 'Show All' by default", "ShopCategoryUI");
             SelectShowAll();
         }
-        
-        Debug.Log($"Setup categories: {availableCategories.Count} categories available");
     }
     
     private void CreateCategoryButtons()
     {
-        if (categoryButtonContainer == null || categoryButtonPrefab == null) return;
+        ShopDebugLogger.Log("=== CREATE CATEGORY BUTTONS ===", "ShopCategoryUI");
+        
+        if (categoryButtonContainer == null)
+        {
+            ShopDebugLogger.LogError("categoryButtonContainer is NULL! Cannot create buttons!", "ShopCategoryUI");
+            return;
+        }
+        
+        if (categoryButtonPrefab == null)
+        {
+            ShopDebugLogger.LogError("categoryButtonPrefab is NULL! Cannot create buttons!", "ShopCategoryUI");
+            return;
+        }
+        
+        ShopDebugLogger.Log($"Container: {categoryButtonContainer.name}, Prefab: {categoryButtonPrefab.name}", "ShopCategoryUI");
         
         // Clear existing buttons
         ClearCategoryButtons();
         
         // Create button for each category
+        ShopDebugLogger.Log($"Creating {availableCategories.Count} category buttons", "ShopCategoryUI");
         foreach (var category in availableCategories)
         {
             CreateCategoryButton(category);
         }
+        
+        ShopDebugLogger.Log($"Created {categoryButtons.Count} buttons total", "ShopCategoryUI");
         
         // Update layout
         if (categoryScrollRect != null)
@@ -130,11 +180,23 @@ public class ShopCategoryUI : MonoBehaviour
     
     private void CreateCategoryButton(ShopCategoryData category)
     {
+        ShopDebugLogger.Log($"Creating button for category: {category.categoryName}", "ShopCategoryUI");
+        
         GameObject buttonObj = Instantiate(categoryButtonPrefab.gameObject, categoryButtonContainer);
+        
+        // Force activate the button if it's inactive
+        if (!buttonObj.activeSelf)
+        {
+            buttonObj.SetActive(true);
+            ShopDebugLogger.Log($"Activated button GameObject: {buttonObj.name}", "ShopCategoryUI");
+        }
+        
         Button button = buttonObj.GetComponent<Button>();
         
         if (button != null)
         {
+            ShopDebugLogger.Log($"Button created successfully: {buttonObj.name}", "ShopCategoryUI");
+            
             // Setup button click
             button.onClick.AddListener(() => SelectCategory(category));
             
@@ -143,18 +205,31 @@ public class ShopCategoryUI : MonoBehaviour
             
             categoryButtons.Add(button);
         }
+        else
+        {
+            ShopDebugLogger.LogError($"Failed to get Button component from instantiated prefab!", "ShopCategoryUI");
+        }
     }
     
     private void SetupCategoryButtonAppearance(Button button, ShopCategoryData category)
     {
+        ShopDebugLogger.Log($"Setting up appearance for button: {category.categoryName}", "ShopCategoryUI");
+        
         // Find components in button
         var texts = button.GetComponentsInChildren<TextMeshProUGUI>();
         var images = button.GetComponentsInChildren<Image>();
+        
+        ShopDebugLogger.Log($"Found {texts.Length} text components and {images.Length} image components", "ShopCategoryUI");
         
         // Setup text (first text component is usually the label)
         if (texts.Length > 0)
         {
             texts[0].text = category.categoryName;
+            ShopDebugLogger.Log($"Set button text[0] to: '{category.categoryName}'", "ShopCategoryUI");
+        }
+        else
+        {
+            ShopDebugLogger.LogError("No TextMeshProUGUI components found in button prefab!", "ShopCategoryUI");
         }
         
         // Setup icon (look for image that's not the button background)
@@ -165,6 +240,7 @@ public class ShopCategoryUI : MonoBehaviour
             {
                 iconImage.sprite = category.categoryIcon;
                 iconImage.color = category.categoryColor;
+                ShopDebugLogger.Log("Category icon set", "ShopCategoryUI");
             }
         }
         
@@ -173,15 +249,25 @@ public class ShopCategoryUI : MonoBehaviour
         {
             int itemCount = GetCategoryItemCount(category);
             texts[1].text = $"({itemCount})";
+            ShopDebugLogger.Log($"Set item count text to: '({itemCount})'", "ShopCategoryUI");
         }
         
         // Store category reference
         var categoryRef = button.gameObject.AddComponent<CategoryReference>();
         categoryRef.category = category;
+        
+        // Debug button visibility
+        var rectTransform = button.GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            ShopDebugLogger.Log($"Button position: {rectTransform.anchoredPosition}, Size: {rectTransform.sizeDelta}, Scale: {rectTransform.localScale}", "ShopCategoryUI");
+        }
     }
     
     private void ClearCategoryButtons()
     {
+        ShopDebugLogger.Log($"Clearing {categoryButtons.Count} existing buttons", "ShopCategoryUI");
+        
         foreach (var button in categoryButtons)
         {
             if (button != null)
@@ -191,6 +277,21 @@ public class ShopCategoryUI : MonoBehaviour
         }
         
         categoryButtons.Clear();
+        
+        // Also clear any remaining children in container (in case of orphaned buttons)
+        if (categoryButtonContainer != null)
+        {
+            int childCount = categoryButtonContainer.childCount;
+            for (int i = childCount - 1; i >= 0; i--)
+            {
+                var child = categoryButtonContainer.GetChild(i);
+                if (child.name.Contains("CategoryButtonPrefab"))
+                {
+                    ShopDebugLogger.Log($"Destroying orphaned button: {child.name}", "ShopCategoryUI");
+                    Destroy(child.gameObject);
+                }
+            }
+        }
     }
     
     // ===== Category Selection =====
@@ -285,9 +386,18 @@ public class ShopCategoryUI : MonoBehaviour
     
     private void UpdateSelectedCategoryDisplay()
     {
+        ShopDebugLogger.Log("=== UPDATE SELECTED CATEGORY DISPLAY ===", "ShopCategoryUI");
+        ShopDebugLogger.Log($"Current selected category: {selectedCategory?.categoryName ?? "None (Show All)"}", "ShopCategoryUI");
+        
         if (selectedCategoryText != null)
         {
-            selectedCategoryText.text = selectedCategory?.categoryName ?? showAllText;
+            string textToSet = selectedCategory?.categoryName ?? showAllText;
+            selectedCategoryText.text = textToSet;
+            ShopDebugLogger.Log($"Set selectedCategoryText to: '{textToSet}'", "ShopCategoryUI");
+        }
+        else
+        {
+            ShopDebugLogger.LogError("selectedCategoryText is NULL - cannot update display!", "ShopCategoryUI");
         }
         
         if (selectedCategoryIcon != null)
@@ -297,16 +407,20 @@ public class ShopCategoryUI : MonoBehaviour
                 selectedCategoryIcon.sprite = selectedCategory.categoryIcon;
                 selectedCategoryIcon.color = selectedCategory.categoryColor;
                 selectedCategoryIcon.gameObject.SetActive(true);
+                ShopDebugLogger.Log("Category icon set and activated", "ShopCategoryUI");
             }
             else
             {
                 selectedCategoryIcon.gameObject.SetActive(false);
+                ShopDebugLogger.Log("Category icon deactivated (no icon)", "ShopCategoryUI");
             }
         }
         
         if (categoryDescriptionText != null)
         {
-            categoryDescriptionText.text = selectedCategory?.categoryDescription ?? "모든 카테고리의 아이템을 표시합니다.";
+            string descText = selectedCategory?.categoryDescription ?? "모든 카테고리의 아이템을 표시합니다.";
+            categoryDescriptionText.text = descText;
+            ShopDebugLogger.Log($"Set category description to: '{descText}'", "ShopCategoryUI");
         }
     }
     

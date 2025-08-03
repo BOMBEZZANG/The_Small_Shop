@@ -142,21 +142,47 @@ public class ShopUI : MonoBehaviour
     
     public void OpenShop(ShopData shopData)
     {
+        ShopDebugLogger.LogSeparator();
+        ShopDebugLogger.Log("=== OPENING SHOP ===", "ShopUI");
+        
         if (shopData == null)
         {
-            Debug.LogError("Cannot open shop: shopData is null");
+            ShopDebugLogger.LogError("Cannot open shop: shopData is null", "ShopUI");
             return;
         }
+        
+        ShopDebugLogger.Log($"Shop Data: {shopData.shopName}", "ShopUI");
+        ShopDebugLogger.Log($"Shop has {shopData.supportedCategories.Count} categories", "ShopUI");
         
         currentShop = shopData;
         
         // Update shop info display
         UpdateShopInfo();
-        
+
         // Update category filtering
         if (categoryUI != null)
         {
+            ShopDebugLogger.Log($"CategoryUI component found! Reference: {categoryUI.gameObject.name}", "ShopUI");
+            ShopDebugLogger.Log($"Setting up {shopData.supportedCategories.Count} categories", "ShopUI");
+            
+            for (int i = 0; i < shopData.supportedCategories.Count; i++)
+            {
+                var cat = shopData.supportedCategories[i];
+                if (cat != null)
+                {
+                    ShopDebugLogger.Log($"Category [{i}]: Name='{cat.categoryName}', ShowInUI={cat.showInShopUI}, SortOrder={cat.sortOrder}", "ShopUI");
+                }
+                else
+                {
+                    ShopDebugLogger.LogWarning($"Category [{i}] is NULL!", "ShopUI");
+                }
+            }
+            
             categoryUI.SetupCategories(shopData.supportedCategories);
+        }
+        else
+        {
+            ShopDebugLogger.LogError("CategoryUI is NULL in ShopUI! Cannot setup categories!", "ShopUI");
         }
         
         // Refresh current tab content
@@ -168,7 +194,7 @@ public class ShopUI : MonoBehaviour
         // Play sound
         PlaySound(openShopSound);
         
-        Debug.Log($"Opened shop UI: {shopData.shopName}");
+        ShopDebugLogger.Log($"Shop UI opened successfully: {shopData.shopName}", "ShopUI");
     }
     
     public void CloseShop()

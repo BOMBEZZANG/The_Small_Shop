@@ -1,0 +1,49 @@
+Shop Debug Log - 2025-08-03 17:22:14
+================================================
+
+
+------------------------
+
+[17:22:14.830] [ShopUI] === OPENING SHOP ===
+[17:22:14.830] [ShopUI] Shop Data: General Store
+[17:22:14.831] [ShopUI] Shop has 2 categories
+[17:22:14.831] [ShopUI] CategoryUI component found! Reference: Category_UI_Status
+[17:22:14.831] [ShopUI] Setting up 2 categories
+[17:22:14.832] [ShopUI] Category [0]: Name='Materials', ShowInUI=True, SortOrder=2
+[17:22:14.833] [ShopUI] Category [1]: Name='Tools', ShowInUI=True, SortOrder=0
+[17:22:14.833] [ShopCategoryUI] === SETUP CATEGORIES CALLED ===
+[17:22:14.834] [ShopCategoryUI] Received 2 categories
+[17:22:14.834] [ShopCategoryUI] Input Category [0]: Materials, ShowInUI: True
+[17:22:14.835] [ShopCategoryUI] Input Category [1]: Tools, ShowInUI: True
+[17:22:14.836] [ShopCategoryUI] After filtering: 2 available categories
+[17:22:14.842] [ShopCategoryUI] Category panel set to: ACTIVE
+[17:22:14.843] [ShopCategoryUI] Selecting 'Show All' by default
+[17:22:14.844] [ShopCategoryUI] === UPDATE SELECTED CATEGORY DISPLAY ===
+[17:22:14.845] [ShopCategoryUI] Current selected category: None (Show All)
+[17:22:14.845] [ShopCategoryUI] Set selectedCategoryText to: 'All Categories'
+[17:22:14.845] [ShopCategoryUI] Category icon deactivated (no icon)
+[17:22:14.845] [ShopCategoryUI] Set category description to: '모든 카테고리의 아이템을 표시합니다.'
+[17:22:14.852] [ShopUI] Shop UI opened successfully: General Store
+
+------------------------
+
+[17:22:14.856] [ShopUI] === OPENING SHOP ===
+[17:22:14.856] [ShopUI] Shop Data: General Store
+[17:22:14.856] [ShopUI] Shop has 2 categories
+[17:22:14.857] [ShopUI] CategoryUI component found! Reference: Category_UI_Status
+[17:22:14.857] [ShopUI] Setting up 2 categories
+[17:22:14.857] [ShopUI] Category [0]: Name='Materials', ShowInUI=True, SortOrder=2
+[17:22:14.858] [ShopUI] Category [1]: Name='Tools', ShowInUI=True, SortOrder=0
+[17:22:14.858] [ShopCategoryUI] === SETUP CATEGORIES CALLED ===
+[17:22:14.858] [ShopCategoryUI] Received 2 categories
+[17:22:14.859] [ShopCategoryUI] Input Category [0]: Materials, ShowInUI: True
+[17:22:14.859] [ShopCategoryUI] Input Category [1]: Tools, ShowInUI: True
+[17:22:14.860] [ShopCategoryUI] After filtering: 2 available categories
+[17:22:14.861] [ShopCategoryUI] Category panel set to: ACTIVE
+[17:22:14.862] [ShopCategoryUI] Selecting 'Show All' by default
+[17:22:14.862] [ShopCategoryUI] === UPDATE SELECTED CATEGORY DISPLAY ===
+[17:22:14.862] [ShopCategoryUI] Current selected category: None (Show All)
+[17:22:14.863] [ShopCategoryUI] Set selectedCategoryText to: 'All Categories'
+[17:22:14.863] [ShopCategoryUI] Category icon deactivated (no icon)
+[17:22:14.863] [ShopCategoryUI] Set category description to: '모든 카테고리의 아이템을 표시합니다.'
+[17:22:14.866] [ShopUI] Shop UI opened successfully: General Store

@@ -1,0 +1,89 @@
+Shop Debug Log - 2025-08-03 17:53:03
+================================================
+
+
+------------------------
+
+[17:53:03.432] [ShopUI] === OPENING SHOP ===
+[17:53:03.433] [ShopUI] Shop Data: General Store
+[17:53:03.433] [ShopUI] Shop has 2 categories
+[17:53:03.434] [ShopUI] CategoryUI component found! Reference: Category_UI_Status
+[17:53:03.434] [ShopUI] Setting up 2 categories
+[17:53:03.435] [ShopUI] Category [0]: Name='Materials', ShowInUI=True, SortOrder=2
+[17:53:03.435] [ShopUI] Category [1]: Name='Tools', ShowInUI=True, SortOrder=0
+[17:53:03.437] [ShopCategoryUI] === SETUP CATEGORIES CALLED ===
+[17:53:03.439] [ShopCategoryUI] Received 2 categories
+[17:53:03.439] [ShopCategoryUI] Input Category [0]: Materials, ShowInUI: True
+[17:53:03.439] [ShopCategoryUI] Input Category [1]: Tools, ShowInUI: True
+[17:53:03.441] [ShopCategoryUI] After filtering: 2 available categories
+[17:53:03.442] [ShopCategoryUI] === CREATE CATEGORY BUTTONS ===
+[17:53:03.443] [ShopCategoryUI] Container: CategoryButtonContainer, Prefab: CategoryButtonPrefab
+[17:53:03.443] [ShopCategoryUI] Clearing 0 existing buttons
+[17:53:03.444] [ShopCategoryUI] Creating 2 category buttons
+[17:53:03.444] [ShopCategoryUI] Creating button for category: Tools
+[17:53:03.446] [ShopCategoryUI] Button created successfully: CategoryButtonPrefab(Clone)
+[17:53:03.447] [ShopCategoryUI] Setting up appearance for button: Tools
+[17:53:03.447] [ShopCategoryUI] Found 2 text components and 2 image components
+[17:53:03.448] [ShopCategoryUI] Set button text[0] to: 'Tools'
+[17:53:03.449] [ShopCategoryUI] Set item count text to: '(0)'
+[17:53:03.451] [ShopCategoryUI] Button position: (0.00, 0.00), Size: (300.00, 40.00), Scale: (1.00, 1.00, 1.00)
+[17:53:03.451] [ShopCategoryUI] Creating button for category: Materials
+[17:53:03.452] [ShopCategoryUI] Button created successfully: CategoryButtonPrefab(Clone)
+[17:53:03.452] [ShopCategoryUI] Setting up appearance for button: Materials
+[17:53:03.453] [ShopCategoryUI] Found 2 text components and 2 image components
+[17:53:03.453] [ShopCategoryUI] Set button text[0] to: 'Materials'
+[17:53:03.453] [ShopCategoryUI] Set item count text to: '(0)'
+[17:53:03.454] [ShopCategoryUI] Button position: (0.00, 0.00), Size: (300.00, 40.00), Scale: (1.00, 1.00, 1.00)
+[17:53:03.454] [ShopCategoryUI] Created 2 buttons total
+[17:53:03.455] [ShopCategoryUI] Category panel set to: ACTIVE
+[17:53:03.455] [ShopCategoryUI] Selecting 'Show All' by default
+[17:53:03.457] [ShopCategoryUI] === UPDATE SELECTED CATEGORY DISPLAY ===
+[17:53:03.457] [ShopCategoryUI] Current selected category: None (Show All)
+[17:53:03.457] [ShopCategoryUI] Set selectedCategoryText to: 'All Categories'
+[17:53:03.458] [ShopCategoryUI] Category icon deactivated (no icon)
+[17:53:03.458] [ShopCategoryUI] Set category description to: '모든 카테고리의 아이템을 표시합니다.'
+[17:53:03.467] [ShopUI] Shop UI opened successfully: General Store
+
+------------------------
+
+[17:53:03.470] [ShopUI] === OPENING SHOP ===
+[17:53:03.470] [ShopUI] Shop Data: General Store
+[17:53:03.470] [ShopUI] Shop has 2 categories
+[17:53:03.472] [ShopUI] CategoryUI component found! Reference: Category_UI_Status
+[17:53:03.472] [ShopUI] Setting up 2 categories
+[17:53:03.472] [ShopUI] Category [0]: Name='Materials', ShowInUI=True, SortOrder=2
+[17:53:03.473] [ShopUI] Category [1]: Name='Tools', ShowInUI=True, SortOrder=0
+[17:53:03.473] [ShopCategoryUI] === SETUP CATEGORIES CALLED ===
+[17:53:03.474] [ShopCategoryUI] Received 2 categories
+[17:53:03.474] [ShopCategoryUI] Input Category [0]: Materials, ShowInUI: True
+[17:53:03.475] [ShopCategoryUI] Input Category [1]: Tools, ShowInUI: True
+[17:53:03.475] [ShopCategoryUI] After filtering: 2 available categories
+[17:53:03.475] [ShopCategoryUI] === CREATE CATEGORY BUTTONS ===
+[17:53:03.475] [ShopCategoryUI] Container: CategoryButtonContainer, Prefab: CategoryButtonPrefab
+[17:53:03.476] [ShopCategoryUI] Clearing 2 existing buttons
+[17:53:03.477] [ShopCategoryUI] Destroying orphaned button: CategoryButtonPrefab(Clone)
+[17:53:03.477] [ShopCategoryUI] Destroying orphaned button: CategoryButtonPrefab(Clone)
+[17:53:03.477] [ShopCategoryUI] Creating 2 category buttons
+[17:53:03.478] [ShopCategoryUI] Creating button for category: Tools
+[17:53:03.478] [ShopCategoryUI] Button created successfully: CategoryButtonPrefab(Clone)
+[17:53:03.478] [ShopCategoryUI] Setting up appearance for button: Tools
+[17:53:03.478] [ShopCategoryUI] Found 2 text components and 2 image components
+[17:53:03.478] [ShopCategoryUI] Set button text[0] to: 'Tools'
+[17:53:03.480] [ShopCategoryUI] Set item count text to: '(0)'
+[17:53:03.480] [ShopCategoryUI] Button position: (0.00, 0.00), Size: (300.00, 40.00), Scale: (1.00, 1.00, 1.00)
+[17:53:03.481] [ShopCategoryUI] Creating button for category: Materials
+[17:53:03.482] [ShopCategoryUI] Button created successfully: CategoryButtonPrefab(Clone)
+[17:53:03.482] [ShopCategoryUI] Setting up appearance for button: Materials
+[17:53:03.482] [ShopCategoryUI] Found 2 text components and 2 image components
+[17:53:03.483] [ShopCategoryUI] Set button text[0] to: 'Materials'
+[17:53:03.483] [ShopCategoryUI] Set item count text to: '(0)'
+[17:53:03.483] [ShopCategoryUI] Button position: (0.00, 0.00), Size: (300.00, 40.00), Scale: (1.00, 1.00, 1.00)
+[17:53:03.484] [ShopCategoryUI] Created 2 buttons total
+[17:53:03.485] [ShopCategoryUI] Category panel set to: ACTIVE
+[17:53:03.485] [ShopCategoryUI] Selecting 'Show All' by default
+[17:53:03.486] [ShopCategoryUI] === UPDATE SELECTED CATEGORY DISPLAY ===
+[17:53:03.486] [ShopCategoryUI] Current selected category: None (Show All)
+[17:53:03.486] [ShopCategoryUI] Set selectedCategoryText to: 'All Categories'
+[17:53:03.486] [ShopCategoryUI] Category icon deactivated (no icon)
+[17:53:03.486] [ShopCategoryUI] Set category description to: '모든 카테고리의 아이템을 표시합니다.'
+[17:53:03.491] [ShopUI] Shop UI opened successfully: General Store
